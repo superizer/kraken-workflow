@@ -1,0 +1,13 @@
+#:import generaloptions generaloptions
+<GeneralOptions>:
+    orientation: 'horizontal'
+    padding: 2
+    Button:
+        text: 'Clear'
+        on_press: root.clear(*args)
+    Button:
+        text: 'Remove'
+        on_release: root.remove(*args)
+    Button:
+        text: 'Line'
+        on_release: root.line(*args)
