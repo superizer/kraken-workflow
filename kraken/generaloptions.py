@@ -31,9 +31,25 @@ class GeneralOptions(BoxLayout):
                 ds.remove_widget(child.line)
                 child.line = None
                 child.to_widget.line = None
+                child.to_widget.to_widget = None
+                child.to_widget = None
                 #self.status_bar.selected_counter -= 1
         self.unselect_all()
         
+    def remove_line_between(self,instance):
+        if self.status_bar.selected_counter is 2:
+            ds = self.drawing_space
+          
+            for child in ds.children:
+                if child.selected:
+                    ds.remove_widget(child.line)
+                    child.line = None
+                    child.to_widget.line = None
+                    child.to_widget.to_widget = None
+                    child.to_widget = None
+                    break
+                    
+            self.unselect_all()
 
     def line(self, instance):
         if self.status_bar.selected_counter is 2:
@@ -67,8 +83,8 @@ class GeneralOptions(BoxLayout):
         ds.remove_widget(widgetA)
         ds.remove_widget(widgetB)
         
-        print('WidgetA : ' + str(widgetA.count))
-        print('WidgetB : ' + str(widgetB.count))
+        #print('WidgetA : ' + str(widgetA.count))
+        #print('WidgetB : ' + str(widgetB.count))
         
         ix = widgetA.x + widgetA.size[0]/2
         iy = widgetA.y + widgetA.size[1]/2
