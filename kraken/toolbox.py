@@ -1,7 +1,8 @@
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.label import Label
-from kivy.graphics import Line, Rectangle, Color
+from kivy.graphics import Line, Rectangle, Color, Triangle, Ellipse
 from widgets import DraggableWidget
+import math
 
 class ToolButton(ToggleButton):
     def on_touch_down(self, touch):
@@ -32,7 +33,6 @@ class ToolRectangle(ToolButton):
         
         l = Label(text='Component')
         widget.add_widget(l)
-        
         ds.add_widget(widget)
     
     def create_widget(self,ix,iy,fx,fy):
@@ -43,9 +43,33 @@ class ToolRectangle(ToolButton):
 class ToolLine(ToolButton):
     def create_figure(self,ix,iy,fx,fy):
         return Line(points=[ix, iy, fx, fy])
-
+    
+    def create_fig_arrow(self,ix,iy,fx,fy):
+        
+        
+        mx = (ix+fx)/2
+        my = (iy+fy)/2
+        
+        mmx = (mx + fx)/2
+        mmy = (my + fy)/2
+        
+        d = 30
+        return Ellipse(pos=(mmx - d / 2, mmy - d / 2), size=(d, d))
+        
+        '''dx = fx - ix
+        dy = fy - iy
+        
+        
+        if dx != 0:
+            print('arctan : ' + str(math.atan(dy/dx)*57.2957795))
+        else:
+            print('arctan : ' + str(90))
+        
+        #if dx > dy:
+        #    return Triangle(points = (mx,my,mmmx-50,mmmy+50,mmmx-50,mmmy-50))
+        return Triangle(points = (mx,my,mx-50,my-50,mx-50,my+50))'''
+        
     def create_widget(self,ix,iy,fx,fy):
         pos = (min(ix, fx), min(iy, fy)) 
         size = (abs(fx-ix), abs(fy-iy))
         return DraggableWidget(pos = pos, size = size)
-

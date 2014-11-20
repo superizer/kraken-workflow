@@ -1,8 +1,10 @@
 import kivy
 from kivy.uix.boxlayout import BoxLayout
+from kivy.graphics import Rotate, Color
 from kivy.properties import NumericProperty, ListProperty
 from toolbox import ToolLine
 from numpy import ix_
+import math
 
 class GeneralOptions(BoxLayout):
     group_mode = True
@@ -14,13 +16,24 @@ class GeneralOptions(BoxLayout):
     def remove(self, instance):
         ds = self.drawing_space
         for child in ds.children:
-            if child.touched:
+            if child.selected:
                 ds.remove_widget(child)
-                self.status_bar.selected_counter -= 1
+                self.status_bar.counter -= 1
                 
     def remove_widget(self,widget):
         ds = self.drawing_space
         ds.remove_widget(widget)
+        
+    def remove_line(self,instance):
+        ds = self.drawing_space
+        for child in ds.children:
+            if child.selected and child.line != None:
+                ds.remove_widget(child.line)
+                child.line = None
+                child.to_widget.line = None
+                #self.status_bar.selected_counter -= 1
+        self.unselect_all()
+        
 
     def line(self, instance):
         if self.status_bar.selected_counter is 2:
@@ -35,7 +48,10 @@ class GeneralOptions(BoxLayout):
             list_child[0].to_widget=list_child[1]
             list_child[1].to_widget=list_child[0]
             
-            line_widget = self.new_line(list_child[0], list_child[1])
+            if list_child[0].count == 1:
+                line_widget = self.new_line(list_child[0], list_child[1])
+            else:
+                line_widget = self.new_line(list_child[1], list_child[0])
             
             list_child[0].line = line_widget
             list_child[1].line = line_widget
@@ -51,6 +67,9 @@ class GeneralOptions(BoxLayout):
         ds.remove_widget(widgetA)
         ds.remove_widget(widgetB)
         
+        print('WidgetA : ' + str(widgetA.count))
+        print('WidgetB : ' + str(widgetB.count))
+        
         ix = widgetA.x + widgetA.size[0]/2
         iy = widgetA.y + widgetA.size[1]/2
         fx = widgetB.x + widgetB.size[0]/2
@@ -60,9 +79,38 @@ class GeneralOptions(BoxLayout):
         line_widget = tl.create_widget(ix,iy,fx,fy)
         (ix,iy) = line_widget.to_local(ix,iy,relative=True)
         (fx,fy) = line_widget.to_local(fx,fy,relative=True)
-            
+        
         line_widget.canvas.add(tl.create_figure(ix,iy,fx,fy))
         
+        '''mx = (ix+fx)/2
+        my = (iy+fy)/2
+        
+        dx = fx - ix
+        dy = fy - iy
+        
+        angle = None
+        
+        if dx != 0:
+            #print('arctan : ' + str(math.atan(dy/dx)*57.2957795))
+            angle = math.atan(dy/dx)*57.2957795
+        else:
+            #print('arctan : ' + str(90))
+            angle = 90
+            
+        if angle < 0 :
+            angle += 360
+            
+        print('angle : ' + str(angle))
+        
+        rot = Rotate()
+        rot.angle = angle
+        rot.axis = (0, 0, 1)
+        rot.origin = (widgetB.x,widgetB.y)
+        
+        line_widget.canvas.add(rot)
+        line_widget.canvas.add(tl.create_fig_arrow(ix,iy,fx,fy))'''
+        line_widget.canvas.add(Color(1, 1, 0, 1))
+        line_widget.canvas.add(tl.create_fig_arrow(ix,iy,fx,fy))
         
         ds.add_widget(line_widget)
         ds.add_widget(widgetA)

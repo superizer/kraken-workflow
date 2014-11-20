@@ -8,12 +8,19 @@ class DraggableWidget(RelativeLayout):
         self.to_widget = None
         self.selected = None
         self.touched = False
+        self.count = None
         super(DraggableWidget, self).__init__(**kwargs)
 
     def on_touch_down(self, touch):
         if self.collide_point(touch.x, touch.y):
             if self.touched is False:
                 self.touched = True
+                if self.line is None:
+                    if self.parent.status_bar.selected_counter == 0:
+                        self.count = 1
+                    else:
+                        self.count = 2
+                #print('self.count : ' + str(self.count))
                 self.select()
             else:
                 self.touched = False
@@ -44,7 +51,10 @@ class DraggableWidget(RelativeLayout):
             self.line = None
             self.to_widget.line = None
             
-            line_widget = go.new_line(self, self.to_widget)
+            if self.count == 1:
+                line_widget = go.new_line(self, self.to_widget)
+            else :
+                line_widget = go.new_line(self.to_widget, self)
             self.line = line_widget
             self.to_widget.line = line_widget
             
