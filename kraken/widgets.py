@@ -38,6 +38,16 @@ class DraggableWidget(RelativeLayout):
         return super(DraggableWidget, self).on_touch_move(touch)
 
     def translate(self, x, y):
+        if self.line is not None:
+            go = self.parent.general_options
+            go.remove_widget(self.line)
+            self.line = None
+            self.to_widget.line = None
+            
+            line_widget = go.new_line(self, self.to_widget)
+            self.line = line_widget
+            self.to_widget.line = line_widget
+            
         self.center_x = self.ix = self.ix + x
         self.center_y = self.iy = self.iy + y
 
