@@ -1,7 +1,7 @@
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.label import Label
 from kivy.graphics import Line, Rectangle, Color, Triangle, Ellipse
-from widgets import DraggableWidget
+from widgets import DraggableWidget #, Component
 import math
 
 class ToolButton(ToggleButton):

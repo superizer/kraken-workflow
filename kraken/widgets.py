@@ -1,25 +1,36 @@
-import kivy
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.graphics import Line
 
 class DraggableWidget(RelativeLayout):
     def __init__(self,  **kwargs):
-        self.line = None
-        self.to_widget = None
+        
         self.selected = None
         self.touched = False
+        
+        self.isLine = False
+        
+        # For Component
         self.count = None
+        #self.line = None
+        #self.to_widget = None
+        self.connect = [] # (to_widget : line)
+        
+        
+        #For Line
+        self.widgetA = None
+        self.widgetB = None
+        
         super(DraggableWidget, self).__init__(**kwargs)
 
     def on_touch_down(self, touch):
         if self.collide_point(touch.x, touch.y):
             if self.touched is False:
                 self.touched = True
-                if self.line is None:
-                    if self.parent.status_bar.selected_counter == 0:
-                        self.count = 1
-                    else:
-                        self.count = 2
+                #if self.line is None:
+                if self.parent.status_bar.selected_counter == 0:
+                    self.count = 1
+                else:
+                    self.count = 2
                 #print('self.count : ' + str(self.count))
                 self.select()
             else:
@@ -45,18 +56,35 @@ class DraggableWidget(RelativeLayout):
         return super(DraggableWidget, self).on_touch_move(touch)
 
     def translate(self, x, y):
-        if self.line is not None:
+
+        if self.connect is not None:
             go = self.parent.general_options
-            go.remove_widget(self.line)
-            self.line = None
-            self.to_widget.line = None
-            
-            if self.count == 1:
-                line_widget = go.new_line(self, self.to_widget)
-            else :
-                line_widget = go.new_line(self.to_widget, self)
-            self.line = line_widget
-            self.to_widget.line = line_widget
+
+            for k in self.connect:
+                widgetA = k[1].widgetA
+                widgetB = k[1].widgetB
+                
+                go.remove_widget(k[1])
+                
+                for k in widgetA.connect:
+                    if k[0] == widgetB:
+                        k[1] = None
+                        
+                for k in widgetB.connect:
+                    if k[0] == widgetA:
+                        k[1] = None
+                
+                line_widget = go.new_line(widgetA, widgetB)
+                line_widget.widgetA = widgetA
+                line_widget.widgetB = widgetB
+                
+                for k in widgetA.connect:
+                    if k[0] == widgetB:
+                        k[1] = line_widget
+                        
+                for k in widgetB.connect:
+                    if k[0] == widgetA:
+                        k[1] = line_widget
             
         self.center_x = self.ix = self.ix + x
         self.center_y = self.iy = self.iy + y
@@ -64,5 +92,6 @@ class DraggableWidget(RelativeLayout):
     def unselect(self):
         if self.selected:
             self.parent.status_bar.selected_counter -= 1;
+            #print('self.selected : ',str(self.selected) )
             self.canvas.remove(self.selected)
-            self.selected = None
+            self.selected = None      

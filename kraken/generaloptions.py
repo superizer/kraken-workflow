@@ -61,30 +61,29 @@ class GeneralOptions(BoxLayout):
                 if child.selected:
                     list_child.append(child)
             
-            list_child[0].to_widget=list_child[1]
-            list_child[1].to_widget=list_child[0]
-            
             if list_child[0].count == 1:
                 line_widget = self.new_line(list_child[0], list_child[1])
+                line_widget.widgetA = list_child[0]
+                line_widget.widgetB = list_child[1]
             else:
                 line_widget = self.new_line(list_child[1], list_child[0])
+                line_widget.widgetA = list_child[1]
+                line_widget.widgetB = list_child[0]
             
-            list_child[0].line = line_widget
-            list_child[1].line = line_widget
+            line_widget.isLine = True
+           
             
-            #ds.add_widget(line_widget)
+            list_child[0].connect.append([list_child[1], line_widget])
+            list_child[1].connect.append([list_child[0], line_widget])
+
+            
 
             self.unselect_all()
             
     def new_line(self, widgetA, widgetB):
-        
-        # remove widgets before draw line
         ds = self.drawing_space
         ds.remove_widget(widgetA)
         ds.remove_widget(widgetB)
-        
-        #print('WidgetA : ' + str(widgetA.count))
-        #print('WidgetB : ' + str(widgetB.count))
         
         ix = widgetA.x + widgetA.size[0]/2
         iy = widgetA.y + widgetA.size[1]/2
