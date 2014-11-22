@@ -6,6 +6,9 @@ from toolbox import ToolLine
 from numpy import ix_
 import math
 
+from json_builder import KrakenJsonEncoder
+import json
+
 class GeneralOptions(BoxLayout):
     group_mode = True
     translation = ListProperty(None)
@@ -142,3 +145,23 @@ class GeneralOptions(BoxLayout):
         for child in self.drawing_space.children:
             if child.selected:
                 child.translate(*self.translation)
+                
+    def to_json(self, instance):
+        print('generate JSON')
+        
+        
+        
+        cv = []
+        for child in self.drawing_space.children:
+            cv.append(child)
+            
+        
+        
+        workflow = dict(cv=cv)
+        
+        #jstr = json.dumps(workflow, cls=KrakenJsonEncoder)
+        
+        with open('/tmp/out.json', 'w') as f:
+            json.dump(dict(workflow=workflow), f, cls=KrakenJsonEncoder)
+        #print("json : ", jstr)
+        

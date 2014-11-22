@@ -6,7 +6,7 @@
         text: 'Clear'
         on_press: root.clear(*args)
     Button:
-        text: 'Remove'
+        text: 'Remove Component'
         on_release: root.remove(*args)
     Button:
         text: 'Line'
@@ -17,3 +17,6 @@
     Button:
         text: 'Remove Line Between'
         on_release: root.remove_line_between(*args)
+    Button:
+        text: 'Export to JSON'
+        on_release: root.to_json(*args)

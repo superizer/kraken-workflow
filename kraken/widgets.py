@@ -94,4 +94,4 @@ class DraggableWidget(RelativeLayout):
             self.parent.status_bar.selected_counter -= 1;
             #print('self.selected : ',str(self.selected) )
             self.canvas.remove(self.selected)
-            self.selected = None      
+            self.selected = None  
