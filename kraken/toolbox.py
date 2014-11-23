@@ -3,6 +3,7 @@ from kivy.uix.label import Label
 from kivy.graphics import Line, Rectangle, Color, Triangle, Ellipse
 from widgets import DraggableWidget #, Component
 import math
+import uuid
 
 class ToolButton(ToggleButton):
     def on_touch_down(self, touch):
@@ -30,8 +31,10 @@ class ToolRectangle(ToolButton):
         (fx,fy) = widget.to_local(fx,fy,relative=True)
         widget.canvas.add(Color(1, 0, 0, 1))
         widget.canvas.add(Rectangle(pos=(ix, iy), size=(w,h)))
+        widget.name = "Component"
+        widget.id = str(uuid.uuid1())
         
-        l = Label(text='Component')
+        l = Label(text=widget.name)
         widget.add_widget(l)
         ds.add_widget(widget)
     

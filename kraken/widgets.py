@@ -8,8 +8,10 @@ class DraggableWidget(RelativeLayout):
         self.touched = False
         
         self.isLine = False
+        self.id = ""
         
         # For Component
+        self.name = ""
         self.count = None
         #self.line = None
         #self.to_widget = None

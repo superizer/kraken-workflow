@@ -5,6 +5,7 @@ from kivy.properties import NumericProperty, ListProperty
 from toolbox import ToolLine
 from numpy import ix_
 import math
+import uuid
 
 from json_builder import KrakenJsonEncoder
 import json
@@ -74,6 +75,8 @@ class GeneralOptions(BoxLayout):
                 line_widget.widgetB = list_child[0]
             
             line_widget.isLine = True
+            line_widget.name = "Line"
+            line_widget.id = str(uuid.uuid1())
            
             
             list_child[0].connect.append([list_child[1], line_widget])
@@ -129,6 +132,8 @@ class GeneralOptions(BoxLayout):
         line_widget.canvas.add(tl.create_fig_arrow(ix,iy,fx,fy))'''
         line_widget.canvas.add(Color(1, 1, 0, 1))
         line_widget.canvas.add(tl.create_fig_arrow(ix,iy,fx,fy))
+        line_widget.name ="Line"
+        line_widget.id = str(uuid.uuid1())
         
         ds.add_widget(line_widget)
         ds.add_widget(widgetA)
@@ -147,7 +152,7 @@ class GeneralOptions(BoxLayout):
                 child.translate(*self.translation)
                 
     def to_json(self, instance):
-        print('generate JSON')
+        #print('generate JSON')
         
         
         
