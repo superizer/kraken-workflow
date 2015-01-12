@@ -1,0 +1,29 @@
+#:import toolbox toolbox
+<ToolButton@ToggleButton>:
+    size_hint: None,None
+    size: 200,48
+    group: 'tool'
+    canvas:
+        PushMatrix:
+        Translate:
+            xy: self.x,self.y
+    canvas.after:
+        PopMatrix:
+
+<ToolBox@GridLayout>:
+    cols: 1
+    padding: 2
+    tool_rectangle: _tool_rectangle
+    tool_library: _tool_select_library
+    ToolRectangle:
+        id: _tool_rectangle
+        ##canvas:
+        ##    Line:
+        ##        rectangle: 10,10,28,28
+        text: 'Create Component'
+    ToolSelectLibrary:
+		id: _tool_select_library
+		text: 'Select Library'
+		values: ["First thing", "Second thing", "Third thing"]
+		
+    

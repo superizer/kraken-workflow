@@ -1,0 +1,22 @@
+#:import generaloptions generaloptions
+<GeneralOptions>:
+    orientation: 'horizontal'
+    padding: 2
+    Button:
+        text: 'Clear'
+        on_press: root.clear(*args)
+    Button:
+        text: 'Remove Component'
+        on_release: root.remove(*args)
+    Button:
+        text: 'Line'
+        on_release: root.line(*args)
+    Button:
+        text: 'Remove Line Component'
+        on_release: root.remove_line(*args)
+    Button:
+        text: 'Remove Line Between'
+        on_release: root.remove_line_between(*args)
+    Button:
+        text: 'Export to JSON'
+        on_release: root.to_json(*args)
