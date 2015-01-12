@@ -6,11 +6,13 @@ from kivy.config import Config
 Config.set('graphics', 'width', '1400')
 Config.set('graphics', 'height', '800')
 
-Builder.load_file('toolbox.kv')
-Builder.load_file('drawingspace.kv')
-Builder.load_file('generaloptions.kv')
-Builder.load_file('statusbar.kv')
-Builder.load_file('widgets.kv')
+
+Builder.load_file('kv/kraken.kv')
+Builder.load_file('kv/toolbox.kv')
+Builder.load_file('kv/drawingspace.kv')
+Builder.load_file('kv/generaloptions.kv')
+Builder.load_file('kv/statusbar.kv')
+Builder.load_file('kv/widgets.kv')
 
 class Kraken(AnchorLayout):
     pass

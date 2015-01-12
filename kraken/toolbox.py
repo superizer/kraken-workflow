@@ -1,7 +1,9 @@
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.label import Label
 from kivy.graphics import Line, Rectangle, Color, Triangle, Ellipse
+from kivy.uix.spinner import Spinner
 from widgets import DraggableWidget #, Component
+
 import math
 import uuid
 
@@ -76,3 +78,16 @@ class ToolLine(ToolButton):
         pos = (min(ix, fx), min(iy, fy)) 
         size = (abs(fx-ix), abs(fy-iy))
         return DraggableWidget(pos = pos, size = size)
+    
+class ToolSelectLibrary(Spinner):
+    
+    def show_selected_value(self, text):
+        print('select library', self.text)
+        
+    def _on_dropdown_select(self, instance, data, *largs):
+        self.text = data
+        self.is_open = False
+        self.show_selected_value(self.text)
+     
+        
+    
