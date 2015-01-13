@@ -3,7 +3,5 @@
 from kraken.krakenapp import KrakenApp
 
 
-
-
 if __name__ == "__main__":
     KrakenApp().run()

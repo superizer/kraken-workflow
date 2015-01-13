@@ -3,6 +3,7 @@ from kivy.uix.label import Label
 from kivy.graphics import Line, Rectangle, Color, Triangle, Ellipse
 from kivy.uix.spinner import Spinner
 from .widgets import DraggableWidget #, Component
+from kraken.json_parser.read_json import Read_JSON
 
 import math
 import uuid
@@ -88,7 +89,24 @@ class ToolSelectLibrary(Spinner):
         self.text = data
         self.is_open = False
         self.show_selected_value(self.text)
-        print('list values',self.values)
+        #print('list values',self.values)
+        self.set_select_function(self.text)
+        
+    def set_select_function(self,library_name):
+        read_obj = Read_JSON()
+        read_obj.get_dic_funcs(library_name)
+        list_funcs = read_obj.get_list_funs()
+        self.parent.tool_function.values=list_funcs
+        #pass
+        
+        
+class ToolSelectFunction(Spinner):
+    
+    def _on_dropdown_select(self, instance, data, *largs):
+        self.text = data
+        self.is_open = False
+        print('select function',self.text)
+    
      
         
     

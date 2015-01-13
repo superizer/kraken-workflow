@@ -1,7 +1,6 @@
-
 <ToolButton@ToggleButton>:
     size_hint: None,None
-    size: 200,48
+    size: 300,48
     group: 'tool'
     canvas:
         PushMatrix:
@@ -12,9 +11,10 @@
 
 <ToolBox@GridLayout>:
     cols: 1
-    padding: 2
+    ##padding: 2
     tool_rectangle: _tool_rectangle
     tool_library: _tool_select_library
+    tool_function: _tool_select_function
     ToolRectangle:
         id: _tool_rectangle
         ##canvas:
@@ -24,6 +24,10 @@
     ToolSelectLibrary:
 		id: _tool_select_library
 		text: 'Select Library'
-		##values: ["First thing", "Second thing", "Third thing"]
+		size: 300,48
+	ToolSelectFunction:
+		id: _tool_select_function
+		text: 'Select Function'
+		size: 300,48
 		
     

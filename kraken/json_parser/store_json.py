@@ -6,7 +6,7 @@ import hashlib
 import html
 import json
 from urllib import request
-from cvfunctions import Function,Parameter
+from .cvfunctions import Function,Parameter
 
 # Open OpenCV Document From OpenCV Website
 
