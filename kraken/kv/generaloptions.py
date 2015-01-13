@@ -2,12 +2,12 @@ import kivy
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Rotate, Color
 from kivy.properties import NumericProperty, ListProperty
-from toolbox import ToolLine
+from .toolbox import ToolLine
 from numpy import ix_
 import math
 import uuid
 
-from json_builder import KrakenJsonEncoder
+from kraken.json_builder import KrakenJsonEncoder
 import json
 
 class GeneralOptions(BoxLayout):

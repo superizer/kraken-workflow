@@ -2,7 +2,7 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.label import Label
 from kivy.graphics import Line, Rectangle, Color, Triangle, Ellipse
 from kivy.uix.spinner import Spinner
-from widgets import DraggableWidget #, Component
+from .widgets import DraggableWidget #, Component
 
 import math
 import uuid
@@ -88,6 +88,7 @@ class ToolSelectLibrary(Spinner):
         self.text = data
         self.is_open = False
         self.show_selected_value(self.text)
+        print('list values',self.values)
      
         
     

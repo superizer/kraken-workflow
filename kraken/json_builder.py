@@ -1,5 +1,5 @@
 import json
-from widgets import DraggableWidget
+from kraken.kv.widgets import DraggableWidget
 
 
 class KrakenJsonEncoder(json.JSONEncoder):
