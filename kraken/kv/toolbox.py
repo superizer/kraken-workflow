@@ -35,7 +35,7 @@ class ToolRectangle(ToolButton):
         (fx,fy) = widget.to_local(fx,fy,relative=True)
         widget.canvas.add(Color(1, 0, 0, 1))
         widget.canvas.add(Rectangle(pos=(ix, iy), size=(w,h)))
-        widget.name = "Component"
+        widget.name = self.parent.tool_function.text
         widget.id = str(uuid.uuid1())
         
         l = Label(text=widget.name)
@@ -89,18 +89,15 @@ class ToolSelectLibrary(Spinner):
     def _on_dropdown_select(self, instance, data, *largs):
         self.text = data
         self.is_open = False
-        self.show_selected_value(self.text)
+        #self.show_selected_value(self.text)
         #print('list values',self.values)
         self.set_select_function(self.text)
         
     def set_select_function(self,library_name):
-        
-        
-        read_obj = CVFunctionParser(settings['kraken_path'])
+        read_obj = CVFunctionParser(settings['kraken_path'] + '/cvlibrary')
         read_obj.get_from_json(library_name)
         list_funcs = read_obj.get_list_funs()
         self.parent.tool_function.values=list_funcs
-        #pass
         
         
 class ToolSelectFunction(Spinner):
@@ -108,7 +105,7 @@ class ToolSelectFunction(Spinner):
     def _on_dropdown_select(self, instance, data, *largs):
         self.text = data
         self.is_open = False
-        print('select function',self.text)
+        #print('select function',self.text)
     
      
         

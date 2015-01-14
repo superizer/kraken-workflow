@@ -1,4 +1,3 @@
-import kivy
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Rotate, Color
 from kivy.properties import NumericProperty, ListProperty
