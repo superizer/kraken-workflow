@@ -68,10 +68,14 @@ class GeneralOptions(BoxLayout):
                 line_widget = self.new_line(list_child[0], list_child[1])
                 line_widget.widgetA = list_child[0]
                 line_widget.widgetB = list_child[1]
+                list_child[0].out_cv.append(list_child[1].id)
+                list_child[1].in_cv.append(list_child[0].id)
             else:
                 line_widget = self.new_line(list_child[1], list_child[0])
                 line_widget.widgetA = list_child[1]
                 line_widget.widgetB = list_child[0]
+                list_child[1].out_cv.append(list_child[0].id)
+                list_child[0].in_cv.append(list_child[1].id)
             
             line_widget.isLine = True
             line_widget.name = "Line"

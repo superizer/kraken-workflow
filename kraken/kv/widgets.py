@@ -17,6 +17,9 @@ class DraggableWidget(RelativeLayout):
         #self.to_widget = None
         self.connect = [] # (to_widget : line)
         
+        self.in_cv = []
+        self.out_cv = []
+        
         
         #For Line
         self.widgetA = None
