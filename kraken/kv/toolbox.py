@@ -2,6 +2,11 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.label import Label
 from kivy.graphics import Line, Rectangle, Color, Triangle, Ellipse
 from kivy.uix.spinner import Spinner
+
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+
 from .widgets import DraggableWidget #, Component
 from kraken.json_parser.read_json import CVFunctionParser
 from kraken.configuration import settings
@@ -106,6 +111,15 @@ class ToolSelectFunction(Spinner):
         self.text = data
         self.is_open = False
         #print('select function',self.text)
+        
+        input_param = GridLayout(cols=2,size =(300,50))
+        input_param.add_widget(Label(text = 'Parameter1'))
+        input_param.add_widget(TextInput())
+        
+        #ds = self.parent.drawing_space
+        self.parent.height = 200
+        self.parent.add_widget(input_param)
+
     
      
         

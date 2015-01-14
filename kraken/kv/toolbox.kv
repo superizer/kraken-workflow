@@ -1,6 +1,6 @@
 <ToolButton@ToggleButton>:
     size_hint: None,None
-    size: 300,48
+    ##size: 300,48
     group: 'tool'
     canvas:
         PushMatrix:
@@ -17,17 +17,15 @@
     tool_function: _tool_select_function
     ToolRectangle:
         id: _tool_rectangle
-        ##canvas:
-        ##    Line:
-        ##        rectangle: 10,10,28,28
         text: 'Create Component'
+        size: 300,50
     ToolSelectLibrary:
 		id: _tool_select_library
 		text: 'Select Library'
-		size: 300,48
+		size: 300,50
 	ToolSelectFunction:
 		id: _tool_select_function
 		text: 'Select Function'
-		size: 300,48
+		size: 300,50
 		
     
