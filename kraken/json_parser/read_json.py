@@ -1,8 +1,7 @@
 import json
 import hashlib
 
-from .cvfunctions import Function,Parameter
-from kraken.json_parser.store_json import dic_funcs
+from .cvfunctions import Function, Parameter
 
 '''dic_funcs = {}
 
