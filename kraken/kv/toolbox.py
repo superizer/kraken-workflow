@@ -111,14 +111,6 @@ class ToolSelectFunction(Spinner):
         self.text = data
         self.is_open = False
         #print('select function',self.text)
-        
-        input_param = GridLayout(cols=2,size =(300,50))
-        input_param.add_widget(Label(text = 'Parameter1'))
-        input_param.add_widget(TextInput())
-        
-        #ds = self.parent.drawing_space
-        self.parent.height = 200
-        self.parent.add_widget(input_param)
 
     
      
