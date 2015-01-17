@@ -10,6 +10,7 @@ from kivy.uix.textinput import TextInput
 from .widgets import DraggableWidget #, Component
 from kraken.json_parser.read_json import CVFunctionParser
 from kraken.configuration import settings
+from kraken.parameter import ParameterMenu
 
 import math
 import uuid
@@ -87,6 +88,10 @@ class ToolLine(ToolButton):
         return DraggableWidget(pos = pos, size = size)
     
 class ToolSelectLibrary(Spinner):
+
+    def __init__(self,  **kwargs):
+        self.read_obj = CVFunctionParser(settings['kraken_path'] + '/cvlibrary')
+        super(ToolSelectLibrary, self).__init__(**kwargs)
     
     def show_selected_value(self, text):
         print('select library', self.text)
@@ -98,19 +103,33 @@ class ToolSelectLibrary(Spinner):
         #print('list values',self.values)
         self.set_select_function(self.text)
         
+        
     def set_select_function(self,library_name):
-        read_obj = CVFunctionParser(settings['kraken_path'] + '/cvlibrary')
-        read_obj.get_from_json(library_name)
-        list_funcs = read_obj.get_list_funs()
+        
+        self.read_obj.get_from_json(library_name)
+        list_funcs =self.read_obj.get_list_funs()
         self.parent.tool_function.values=list_funcs
         
         
 class ToolSelectFunction(Spinner):
-    
     def _on_dropdown_select(self, instance, data, *largs):
         self.text = data
         self.is_open = False
         #print('select function',self.text)
+        self.get_parameter_layout(self.text)
+        self.set_select_parameter(self.text)
+        
+    def get_parameter_layout(self,function):
+        print('pars',self.parent.tool_library.read_obj.get_pars_in_funcs(function))
+        
+    def set_select_parameter(self,function):
+        list_pars = self.parent.tool_library.read_obj.get_pars_type(function)
+        print('list_pars',list_pars)
+        self.parent.tool_parameter.values=list_pars
+            
+        
+class ToolSelectParameter(Spinner):
+    pass
 
     
      

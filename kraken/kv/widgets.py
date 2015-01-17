@@ -41,7 +41,7 @@ class DraggableWidget(RelativeLayout):
             print("double tapp !!")
             
             
-            self.input_pars.add_widget(Label(text = 'Parameter1'))
+            '''self.input_pars.add_widget(Label(text = 'Parameter1'))
             self.input_pars.add_widget(TextInput())
             
             
@@ -55,7 +55,7 @@ class DraggableWidget(RelativeLayout):
         
             self.parent.tool_box.height = 250
             self.parent.tool_box.add_widget(self.input_pars)
-            self.parent.tool_box.add_widget(self.option_pars)
+            self.parent.tool_box.add_widget(self.option_pars)'''
         
         if self.collide_point(touch.x, touch.y):
             if self.touched is False:
