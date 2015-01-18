@@ -21,7 +21,7 @@ class ParameterMenu():
         self.input_pars.add_widget(TextInput())
             
         def save_pars(instance):
-            print('save pars')
+            #print('save pars')
             self.input_pars.clear_widgets()
             self.option_pars.clear_widgets()
             self.toolbox.remove_widget(self.input_pars)
@@ -29,7 +29,7 @@ class ParameterMenu():
             self.toolbox.height = 200
         
         def cancel_pars(instance):
-            print('cancel parameter')
+            #print('cancel parameter')
             self.input_pars.clear_widgets()
             self.option_pars.clear_widgets()
             self.toolbox.remove_widget(self.input_pars)
