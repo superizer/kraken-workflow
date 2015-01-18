@@ -9,38 +9,46 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 
 class ParameterMenu():
-    def __init__(self, pars_dict):
-        self.pars_dict = pars_dict
+    def __init__(self, pars_type,toolbox):
+        self.pars_type = pars_type
+        self.toolbox = toolbox
+        self.input_pars = GridLayout(cols=2,size =(300,50))
+        self.option_pars = GridLayout(cols=2,size =(300,50))
         
-    def pars_layout(self):
+        
+    def create_pars_layout(self):
         self.input_pars.add_widget(Label(text = 'Parameter1'))
         self.input_pars.add_widget(TextInput())
             
+        def save_pars(instance):
+            print('save pars')
+            self.input_pars.clear_widgets()
+            self.option_pars.clear_widgets()
+            self.toolbox.remove_widget(self.input_pars)
+            self.toolbox.remove_widget(self.option_pars)
+            self.toolbox.height = 200
+        
+        def cancel_pars(instance):
+            print('cancel parameter')
+            self.input_pars.clear_widgets()
+            self.option_pars.clear_widgets()
+            self.toolbox.remove_widget(self.input_pars)
+            self.toolbox.remove_widget(self.option_pars)
+            self.toolbox.height = 200
             
+        
+        
         btn_save = Button(text='Save')
-        btn_save.bind(on_press=self.save_param)
+        btn_save.bind(on_press=save_pars)
         btn_cancel = Button(text='Cancel')
-        btn_cancel.bind(on_press=self.cancel_param)
+        btn_cancel.bind(on_press=cancel_pars)
+        
+        
         self.option_pars.add_widget(btn_save)
         self.option_pars.add_widget(btn_cancel)
             
         
-        self.parent.tool_box.height = 250
-        self.parent.tool_box.add_widget(self.input_pars)
-        self.parent.tool_box.add_widget(self.option_pars)
-    
-    def save_pars(self,instance):
-        print('save parameter')
-        self.input_pars.clear_widgets()
-        self.option_pars.clear_widgets()
-        self.parent.tool_box.remove_widget(self.input_pars)
-        self.parent.tool_box.remove_widget(self.option_pars)
-        self.parent.tool_box.height = 150
+        self.toolbox.height = 300
+        self.toolbox.add_widget(self.input_pars)
+        self.toolbox.add_widget(self.option_pars)
         
-    def cancel_pars(self,instance):
-        print('cancel parameter')
-        self.input_pars.clear_widgets()
-        self.option_pars.clear_widgets()
-        self.parent.tool_box.remove_widget(self.input_pars)
-        self.parent.tool_box.remove_widget(self.option_pars)
-        self.parent.tool_box.height = 150

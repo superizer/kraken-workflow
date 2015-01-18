@@ -6,6 +6,8 @@ from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 
+from kraken.parameter import ParameterMenu
+
 class DraggableWidget(RelativeLayout):
     def __init__(self,  **kwargs):
         
@@ -38,24 +40,8 @@ class DraggableWidget(RelativeLayout):
     def on_touch_down(self, touch):
         
         if touch.is_double_tap and self.isLine == False:
-            print("double tapp !!")
-            
-            
-            '''self.input_pars.add_widget(Label(text = 'Parameter1'))
-            self.input_pars.add_widget(TextInput())
-            
-            
-            btn_save = Button(text='Save')
-            btn_save.bind(on_press=self.save_param)
-            btn_cancel = Button(text='Cancel')
-            btn_cancel.bind(on_press=self.cancel_param)
-            self.option_pars.add_widget(btn_save)
-            self.option_pars.add_widget(btn_cancel)
-            
-        
-            self.parent.tool_box.height = 250
-            self.parent.tool_box.add_widget(self.input_pars)
-            self.parent.tool_box.add_widget(self.option_pars)'''
+            pm = ParameterMenu(self.parent.tool_box.tool_parameter.text,self.parent.tool_box)
+            pm.create_pars_layout()
         
         if self.collide_point(touch.x, touch.y):
             if self.touched is False:
@@ -129,19 +115,3 @@ class DraggableWidget(RelativeLayout):
             #print('self.selected : ',str(self.selected) )
             self.canvas.remove(self.selected)
             self.selected = None  
-            
-    def save_param(self,instance):
-        print('save parameter')
-        self.input_pars.clear_widgets()
-        self.option_pars.clear_widgets()
-        self.parent.tool_box.remove_widget(self.input_pars)
-        self.parent.tool_box.remove_widget(self.option_pars)
-        self.parent.tool_box.height = 150
-        
-    def cancel_param(self,instance):
-        print('cancel parameter')
-        self.input_pars.clear_widgets()
-        self.option_pars.clear_widgets()
-        self.parent.tool_box.remove_widget(self.input_pars)
-        self.parent.tool_box.remove_widget(self.option_pars)
-        self.parent.tool_box.height = 150

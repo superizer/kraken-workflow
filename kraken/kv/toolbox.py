@@ -10,7 +10,6 @@ from kivy.uix.textinput import TextInput
 from .widgets import DraggableWidget #, Component
 from kraken.json_parser.read_json import CVFunctionParser
 from kraken.configuration import settings
-from kraken.parameter import ParameterMenu
 
 import math
 import uuid
@@ -116,11 +115,7 @@ class ToolSelectFunction(Spinner):
         self.text = data
         self.is_open = False
         #print('select function',self.text)
-        self.get_parameter_layout(self.text)
         self.set_select_parameter(self.text)
-        
-    def get_parameter_layout(self,function):
-        print('pars',self.parent.tool_library.read_obj.get_pars_in_funcs(function))
         
     def set_select_parameter(self,function):
         list_pars = self.parent.tool_library.read_obj.get_pars_type(function)
@@ -129,7 +124,13 @@ class ToolSelectFunction(Spinner):
             
         
 class ToolSelectParameter(Spinner):
-    pass
+    def _on_dropdown_select(self, instance, data, *largs):
+        self.text = data
+        self.is_open = False
+        self.get_parameter_layout(self.text)
+    
+    def get_parameter_layout(self,function):
+        print('pars', function)
 
     
      

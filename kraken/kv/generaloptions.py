@@ -21,9 +21,7 @@ class GeneralOptions(BoxLayout):
         for child in ds.children:
             if child.selected:
                 ds.remove_widget(child)
-                if self.status_bar.counter != 0: 
-                    self.status_bar.counter -= 1
-                    self.status_bar.selected_counter -=1
+                self.status_bar.selected_counter -= 1
                 
     def remove_widget(self,widget):
         ds = self.drawing_space
