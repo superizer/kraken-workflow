@@ -27,8 +27,11 @@ class DraggableWidget(RelativeLayout):
         self.in_cv = []
         self.out_cv = []
         
-        self.input_pars = GridLayout(cols=2,size =(300,50))
-        self.option_pars = GridLayout(cols=2,size =(300,50))
+        self.pars = {}
+        #self.pars = ''
+        
+        #self.input_pars = GridLayout(cols=2,size =(300,50))
+        #self.option_pars = GridLayout(cols=2,size =(300,50))
         
         
         #For Line
@@ -38,11 +41,6 @@ class DraggableWidget(RelativeLayout):
         super(DraggableWidget, self).__init__(**kwargs)
 
     def on_touch_down(self, touch):
-        
-        if touch.is_double_tap and self.isLine == False:
-            pm = ParameterMenu(self.parent.tool_box.tool_parameter.text,self.parent.tool_box)
-            pm.create_pars_layout()
-        
         if self.collide_point(touch.x, touch.y):
             if self.touched is False:
                 self.touched = True
@@ -56,6 +54,12 @@ class DraggableWidget(RelativeLayout):
             else:
                 self.touched = False
                 self.unselect()
+                
+            if touch.is_double_tap and self.isLine == False:
+                pm = ParameterMenu(self.pars,self.parent.tool_box)
+                pm.create_pars_layout()
+                #print('widget pars',self.pars)
+                
             return True
         return super(DraggableWidget, self).on_touch_down(touch)
 

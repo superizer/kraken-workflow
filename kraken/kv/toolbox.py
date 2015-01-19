@@ -41,6 +41,8 @@ class ToolRectangle(ToolButton):
         widget.canvas.add(Color(1, 0, 0, 1))
         widget.canvas.add(Rectangle(pos=(ix, iy), size=(w,h)))
         widget.name = self.parent.tool_function.text
+        widget.pars = self.parent.tool_function.map_pars[self.parent.tool_parameter.text]
+        #widget.pars = self.parent.tool_parameter.text
         widget.id = str(uuid.uuid1())
         
         l = Label(text=widget.name)
@@ -107,10 +109,15 @@ class ToolSelectLibrary(Spinner):
         
         self.read_obj.get_from_json(library_name)
         list_funcs =self.read_obj.get_list_funs()
-        self.parent.tool_function.values=list_funcs
+        self.parent.tool_function.values=set(list_funcs)
         
         
 class ToolSelectFunction(Spinner):
+    
+    def __init__(self,  **kwargs):
+        self.map_pars = {}
+        super(ToolSelectFunction, self).__init__(**kwargs)
+    
     def _on_dropdown_select(self, instance, data, *largs):
         self.text = data
         self.is_open = False
@@ -118,19 +125,20 @@ class ToolSelectFunction(Spinner):
         self.set_select_parameter(self.text)
         
     def set_select_parameter(self,function):
-        list_pars = self.parent.tool_library.read_obj.get_pars_type(function)
-        print('list_pars',list_pars)
-        self.parent.tool_parameter.values=list_pars
+        self.map_pars = self.parent.tool_library.read_obj.get_pars_type(function)
+        #print('map_pars',map_pars)
+        self.parent.tool_parameter.values=self.map_pars.keys()
             
         
 class ToolSelectParameter(Spinner):
-    def _on_dropdown_select(self, instance, data, *largs):
+    pass
+    '''def _on_dropdown_select(self, instance, data, *largs):
         self.text = data
         self.is_open = False
         self.get_parameter_layout(self.text)
     
     def get_parameter_layout(self,function):
-        print('pars', function)
+        print('pars', function)'''
 
     
      
