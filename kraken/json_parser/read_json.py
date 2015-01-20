@@ -64,7 +64,6 @@ class CVFunctionParser():
                     in_p['description'] = par.description
                     in_p['value'] = ''
                     par_list.append(in_p)
-                #pars.append(par_type)
                 pars[str(par_type)] = par_list
         return pars
             
