@@ -28,7 +28,7 @@ class ParameterMenu():
             #self.input_pars.add_widget(TextInput())
             self.input_pars = GridLayout(cols=2,size =(300,50))
             self.input_pars.add_widget(Label(text = par['name']))
-            self.input_pars.add_widget(TextInput())
+            self.input_pars.add_widget(TextInput(text=par['value']))
             self.list_input_pars.append(self.input_pars)
             #self.toolbox.add_widget(self.input_pars)
         
@@ -36,13 +36,26 @@ class ParameterMenu():
             self.toolbox.add_widget(par)
             
         def save_pars(instance):
-            #print('save pars')
+            
+            par_name = ''
+            par_value = ''
+            
+            for par in self.list_input_pars:
+                for child in par.children:
+                    if type(child) is TextInput:
+                        par_value = child.text
+                    elif type(child) is Label:
+                        par_name = child.text
+                
+                for parr in self.pars_dict:
+                    if parr['name'] == par_name:
+                        parr['value'] = par_value
+                
+                self.toolbox.remove_widget(par)
+            
+            self.list_input_pars.clear()
             self.input_pars.clear_widgets()
             self.option_pars.clear_widgets()
-            
-            #self.toolbox.remove_widget(self.input_pars)
-            for par in self.list_input_pars:
-                self.toolbox.remove_widget(par)
             
             self.toolbox.remove_widget(self.option_pars)
             self.toolbox.height = 200
@@ -55,6 +68,8 @@ class ParameterMenu():
             #self.toolbox.remove_widget(self.input_pars)
             for par in self.list_input_pars:
                 self.toolbox.remove_widget(par)
+                
+            self.list_input_pars.clear()
                 
             self.toolbox.remove_widget(self.option_pars)
             self.toolbox.height = 200
