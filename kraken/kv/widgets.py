@@ -55,7 +55,7 @@ class DraggableWidget(RelativeLayout):
                 self.touched = False
                 self.unselect()
                 
-            if touch.is_double_tap and self.isLine == False:
+            if touch.is_double_tap and self.isLine == False and len(self.pars) != 0:
                 pm = ParameterMenu(self.pars,self.parent.tool_box)
                 pm.create_pars_layout()
                 #print('widget pars',self.pars)
