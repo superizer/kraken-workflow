@@ -6,7 +6,7 @@ import hashlib
 import html
 import json
 from urllib import request
-from .cvfunctions import Function,Parameter
+from cvfunctions import Function,Parameter
 
 # Open OpenCV Document From OpenCV Website
 
@@ -42,7 +42,7 @@ for section in sections:
         des = re.search(r'</h2>\s<p>(.*?)</p>\s<dl',section[2])
         func_obj.add_description(des.group(1))
 
-        r_type = re.findall(r'^([\w\<\>]+) ([\w\<\>]+)\((.*)\)',fun)
+        r_type = re.findall(r'^([\w\<\>]+) ([\w\<\>\:]+)\((.*)\)',fun)
         if r_type:
             for r in r_type:
                 return_type = r[0]
@@ -64,7 +64,26 @@ for section in sections:
 		
 		# Store Return Type Function To Function Object
                 func_obj.add_return_type(return_type)
-		
+
+        r_type = re.findall(r'^([\w\<\>\:]+)\((.*)\)',fun)
+        if r_type:
+            for r in r_type:
+                func_name = r[0]
+                params = ' ' + r[1] + ','
+                parameters = []
+                pars = re.findall(r'\s(.*?),',params)
+                for par in pars:
+		            # Store Parameter And Parameter Return Type To Function Object
+                    if par.count(' ') is 1:
+                        par_pair = re.findall(r'(.*?)\s(.*)',par)
+                        if par_pair:
+                            func_obj.add_parameter_type(par_pair[0][1],par_pair[0][0])
+                     
+                    else:
+                        par_three = re.findall(r'(.*?)\s(.*?)\s(.*)',par) 
+                        if par_three:
+                            func_obj.add_parameter_type(par_three[0][2],par_three[0][0] + ' ' + par_three[0][1])
+        		
         set_desc = re.findall(r'<ul class="first last simple">.*',section[2])
         for set_des in set_desc:
             desc = re.findall(r'<strong>(.*?)</strong>(.*?)</li>',set_des)

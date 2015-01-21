@@ -16,10 +16,16 @@ class Function:
         self.fname = fname
 
     def add_description(self,des):
-            self.description = des
+	    self.description = des
 
     def add_return_type(self, return_type):
         self.return_type = return_type
+
+    def add_parameter(self, name):
+        par = Parameter()
+        par.name = name
+        self.pars.append(par)
+        return par
 
     def get_parameter(self, name):
         par = None
@@ -30,10 +36,10 @@ class Function:
             elif (len(name) < len(sublist.name)) and (name == sublist.name[:len(name)]):
                 par = sublist
                 break
-        if par is None:
+        '''if par is None:
             par = Parameter()
             par.name = name
-            self.pars.append(par)
+            self.pars.append(par)'''
         return par
 
     def update_parameter(self,par):
@@ -45,11 +51,13 @@ class Function:
 
     def add_parameter_des(self, name, des):
         par = self.get_parameter(name)
-        par.description = des
-        self.update_parameter(par)
+        if par != None:
+            par.description = des
+            self.update_parameter(par)
 
     def add_parameter_type(self, name, type_):
-        par = self.get_parameter(name)
+        #par = self.get_parameter(name)
+        par = self.add_parameter(name)
         par.type = type_
         self.update_parameter(par)
 
