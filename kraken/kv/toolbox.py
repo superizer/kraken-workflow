@@ -125,6 +125,7 @@ class ToolSelectFunction(Spinner):
         self.set_select_parameter(self.text)
         
     def set_select_parameter(self,function):
+        self.parent.tool_parameter.text='Select Parameter'
         self.map_pars = self.parent.tool_library.read_obj.get_pars_type(function)
         #print('map_pars',map_pars)
         self.parent.tool_parameter.values=self.map_pars.keys()

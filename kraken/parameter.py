@@ -8,6 +8,20 @@ from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 
+class InputForm(TextInput):
+    
+    def __init__(self,toolbox,  **kwargs):
+        self.toolbox = toolbox
+        super(InputForm, self).__init__(**kwargs)
+        
+    def on_double_tap(self):
+        #print('hello tappp !!')
+        ds = self.toolbox.drawing_space
+        for child in ds.children:
+            if child.selected:
+                #print('select :',child.id)
+                self.text = 'id=' + child.id
+
 class ParameterMenu():
     def __init__(self, pars_dict,toolbox):
         self.pars_dict = pars_dict
@@ -28,7 +42,11 @@ class ParameterMenu():
             #self.input_pars.add_widget(TextInput())
             self.input_pars = GridLayout(cols=2,size =(300,50))
             self.input_pars.add_widget(Label(text = par['name']))
-            self.input_pars.add_widget(TextInput(text=par['value']))
+            #self.input_pars.add_widget(TextInput(text=par['value']))
+            
+            ti = InputForm(text=par['value'],toolbox=self.toolbox)
+            self.input_pars.add_widget(ti)
+            
             self.list_input_pars.append(self.input_pars)
             #self.toolbox.add_widget(self.input_pars)
         
@@ -42,7 +60,8 @@ class ParameterMenu():
             
             for par in self.list_input_pars:
                 for child in par.children:
-                    if type(child) is TextInput:
+                    #if type(child) is TextInput:
+                    if type(child) is InputForm:
                         par_value = child.text
                     elif type(child) is Label:
                         par_name = child.text
