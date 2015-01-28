@@ -20,6 +20,7 @@ class DraggableWidget(RelativeLayout):
         # For Component
         self.name = ""
         self.count = None
+        self.level = None
         #self.line = None
         #self.to_widget = None
         self.connect = [] # (to_widget : line)

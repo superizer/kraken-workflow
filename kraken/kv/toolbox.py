@@ -47,6 +47,10 @@ class ToolRectangle(ToolButton):
         
         l = Label(text=widget.name)
         widget.add_widget(l)
+        
+        if len(ds.children) == 0:
+            widget.level = 0
+        
         ds.add_widget(widget)
     
     def create_widget(self,ix,iy,fx,fy):
