@@ -44,7 +44,7 @@ class ParameterMenu():
             self.input_pars.add_widget(Label(text = par['name']))
             #self.input_pars.add_widget(TextInput(text=par['value']))
             
-            ti = InputForm(text=par['value'],toolbox=self.toolbox)
+            ti = InputForm(text=str(par['value']),toolbox=self.toolbox)
             self.input_pars.add_widget(ti)
             
             self.list_input_pars.append(self.input_pars)
@@ -68,7 +68,12 @@ class ParameterMenu():
                 
                 for parr in self.pars_dict:
                     if parr['name'] == par_name:
-                        parr['value'] = par_value
+                        if parr['type'] == 'int':
+                            parr['value'] = int(par_value)
+                        elif parr['type'] == 'double' or parr['type'] == 'float':
+                            parr['value'] = float(par_value)
+                        else:
+                            parr['value'] = par_value
                 
                 self.toolbox.remove_widget(par)
             
