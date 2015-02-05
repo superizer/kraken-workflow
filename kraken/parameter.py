@@ -7,9 +7,10 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
-from kivy.uix.filechooser import FileChooserListView
+from kivy.uix.filechooser import FileChooserIconView
 from kivy.uix.popup import Popup
-from kivy.uix.stacklayout import StackLayout
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.anchorlayout import AnchorLayout
 
 class InputForm(TextInput):
     
@@ -26,17 +27,39 @@ class InputForm(TextInput):
                 self.text = 'id=' + child.id
                 
     def on_triple_tap(self):
-        filechoser_layout = StackLayout( orientation="lr-bt")
-        filechoser = FileChooserListView( size_hint = (0.75,1), size=(1,400), path='/home/superizer/Pictures') #,multiselect = True)
-        filechoser_layout.add_widget(filechoser)
         
-        ok_button = Button(text = 'Ok' , size_hint = (0.12,None), size=(1,25))
-        cancel_button = Button(text = 'Cancel' ,size_hint = (0.12,None), size=(1,25))
+        filechoser_layout = AnchorLayout()
         
-        filechoser_layout.add_widget(ok_button)
-        filechoser_layout.add_widget(cancel_button)
         
-        popup_browser = Popup(title = 'Open File')
+        filechoser = FileChooserIconView( size_hint = (0.75,0.85), path='/home/superizer/Pictures') #, multiselect = True)
+        filechoser_list_layout = AnchorLayout(anchor_x='left', anchor_y='top')
+        filechoser_list_layout.add_widget(filechoser)
+        
+        button_layout = AnchorLayout(anchor_x='left', anchor_y='bottom')
+        
+        box = BoxLayout(orientation='vertical', size_hint = (0.75,None), height = 96)
+        
+        bli =  BoxLayout(orientation='horizontal')
+        ok_button = Button(text = 'Ok')
+        cancel_button = Button(text = 'Cancel')
+        
+        
+        bli2 =  BoxLayout(orientation='horizontal')
+        ti = TextInput(size_hint = (1,None), height = 48)
+        bli2.add_widget(Label(text = 'File Name'))
+        bli2.add_widget(ti)
+        
+        bli.add_widget(ok_button)
+        bli.add_widget(cancel_button)
+        box.add_widget(bli2)
+        box.add_widget(bli)
+        button_layout.add_widget(box)
+        
+        
+        filechoser_layout.add_widget(filechoser_list_layout)
+        filechoser_layout.add_widget(button_layout)
+        
+        popup_browser = Popup(title = 'Select File')
         popup_browser.add_widget(filechoser_layout)
         
         def save_path(instance):
