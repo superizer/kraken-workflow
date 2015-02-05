@@ -7,6 +7,9 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from kivy.uix.filechooser import FileChooserListView
+from kivy.uix.popup import Popup
+from kivy.uix.stacklayout import StackLayout
 
 class InputForm(TextInput):
     
@@ -21,6 +24,31 @@ class InputForm(TextInput):
             if child.selected:
                 #print('select :',child.id)
                 self.text = 'id=' + child.id
+                
+    def on_triple_tap(self):
+        filechoser_layout = StackLayout( orientation="lr-bt")
+        filechoser = FileChooserListView( size_hint = (0.75,1), size=(1,400), path='/home/superizer/Pictures') #,multiselect = True)
+        filechoser_layout.add_widget(filechoser)
+        
+        ok_button = Button(text = 'Ok' , size_hint = (0.12,None), size=(1,25))
+        cancel_button = Button(text = 'Cancel' ,size_hint = (0.12,None), size=(1,25))
+        
+        filechoser_layout.add_widget(ok_button)
+        filechoser_layout.add_widget(cancel_button)
+        
+        popup_browser = Popup(title = 'Open File')
+        popup_browser.add_widget(filechoser_layout)
+        
+        def save_path(instance):
+            #print('path',filechoser.path)
+            #print('path',filechoser.selection)
+            self.text = filechoser.selection[0]
+            popup_browser.dismiss()
+        
+        cancel_button.bind(on_press = popup_browser.dismiss)
+        ok_button.bind(on_press = save_path)
+        
+        popup_browser.open()
 
 class ParameterMenu():
     def __init__(self, pars_dict,toolbox):
