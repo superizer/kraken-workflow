@@ -67,7 +67,7 @@ class ParameterMenu():
                         par_name = child.text
                 
                 for parr in self.pars_dict:
-                    if parr['name'] == par_name:
+                    if parr['name'] == par_name and par_value != '':
                         if parr['type'] == 'int':
                             parr['value'] = int(par_value)
                         elif parr['type'] == 'double' or parr['type'] == 'float':

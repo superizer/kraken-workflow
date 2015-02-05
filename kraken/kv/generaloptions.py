@@ -5,6 +5,8 @@ from .toolbox import ToolLine
 from numpy import ix_
 import math
 import uuid
+import sys
+import subprocess
 
 from kraken.json_builder import KrakenJsonEncoder
 import json
@@ -177,9 +179,17 @@ class GeneralOptions(BoxLayout):
         
         workflow = dict(cv=cv)
         
-        #jstr = json.dumps(workflow, cls=KrakenJsonEncoder)
+        jstr = json.dumps(dict(workflow=workflow), cls=KrakenJsonEncoder)
         
-        with open('/tmp/out.json', 'w') as f:
-            json.dump(dict(workflow=workflow), f, cls=KrakenJsonEncoder)
+        p = subprocess.Popen([sys.executable, "/home/superizer/Public/grive/My Project/kraken_backend/kraken.py"],
+                     stdin=subprocess.PIPE,
+                     stdout=subprocess.PIPE)
+        out, _ = p.communicate(jstr.encode())
+        print(out.decode())
+        
+        #with open('/tmp/out.json', 'w') as f:
+        #    json.dump(dict(workflow=workflow), f, cls=KrakenJsonEncoder)
+        
+        
         #print("json : ", jstr)
         
