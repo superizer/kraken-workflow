@@ -11,6 +11,7 @@ from kivy.uix.filechooser import FileChooserIconView
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
+import cv2
 
 class InputForm(TextInput):
     
@@ -120,7 +121,12 @@ class ParameterMenu():
                 for parr in self.pars_dict:
                     if parr['name'] == par_name and par_value != '':
                         if parr['type'] == 'int':
-                            parr['value'] = int(par_value)
+                            if len(par_value) > 6 and (par_value[0:6] == "COLOR_" or par_value[0:3] == "cv2"):
+                                if par_value[0:6] == "COLOR_":
+                                    par_value = 'cv2.' + par_value
+                                parr['value'] = eval(par_value)
+                            else:
+                                parr['value'] = int(par_value)
                         elif parr['type'] == 'double' or parr['type'] == 'float':
                             parr['value'] = float(par_value)
                         else:
