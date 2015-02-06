@@ -28,6 +28,10 @@ class ToolButton(ToggleButton):
     
 class ToolRectangle(ToolButton):
     def draw(self, ds, x, y):
+        
+        if self.parent.tool_parameter.text == 'Select Parameter':
+            return
+                   
         h = 60
         w = 150
         ix = x - w/2
@@ -110,7 +114,8 @@ class ToolSelectLibrary(Spinner):
         
         
     def set_select_function(self,library_name):
-        
+        self.parent.tool_function.text='Select Function'
+        self.parent.tool_parameter.text='Select Parameter'
         self.read_obj.get_from_json(library_name)
         list_funcs =self.read_obj.get_list_funs()
         self.parent.tool_function.values=set(list_funcs)

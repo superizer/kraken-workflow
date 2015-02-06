@@ -11,6 +11,11 @@ class CVFunctionParser():
         self.path = path
         
     def get_from_json(self,library):
+        
+        self.dic_funcs = {}
+        self.map_funcs = {}
+        self.list_funcs = []
+        
         with open(self.path + '/' + library) as json_file:
             json_data = json.load(json_file) 
             funs = json_data['function']['cv']
