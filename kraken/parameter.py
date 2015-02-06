@@ -11,6 +11,10 @@ from kivy.uix.filechooser import FileChooserIconView
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.image import Image
+from kivy.core.window import Window
+from .configuration import settings
+
 import cv2
 
 class InputForm(TextInput):
@@ -31,8 +35,7 @@ class InputForm(TextInput):
         
         filechoser_layout = AnchorLayout()
         
-        
-        filechoser = FileChooserIconView( size_hint = (0.75,0.85), path='/home/superizer/Pictures') #, multiselect = True)
+        filechoser = FileChooserIconView( size_hint = (0.75,0.85), path=settings['kraken_path'] +'/picture') #, multiselect = True)
         filechoser_list_layout = AnchorLayout(anchor_x='left', anchor_y='top')
         filechoser_list_layout.add_widget(filechoser)
         
@@ -47,7 +50,7 @@ class InputForm(TextInput):
         
         bli2 =  BoxLayout(orientation='horizontal')
         ti = TextInput(size_hint = (1,None), height = 48)
-        bli2.add_widget(Label(text = 'File Name'))
+        bli2.add_widget(Label(text = 'Enter File Name : '))
         bli2.add_widget(ti)
         
         bli.add_widget(ok_button)
@@ -56,21 +59,31 @@ class InputForm(TextInput):
         box.add_widget(bli)
         button_layout.add_widget(box)
         
+        image_layout = AnchorLayout(anchor_x='right', anchor_y='center')
+        wimg = Image(source=settings['kraken_path'] +'/picture/girl.jpg',size_hint = (0.25,None),  size=(200,Window.size[1]))
+        image_layout.add_widget(wimg)
+        
         
         filechoser_layout.add_widget(filechoser_list_layout)
         filechoser_layout.add_widget(button_layout)
+        filechoser_layout.add_widget(image_layout)
         
         popup_browser = Popup(title = 'Select File')
         popup_browser.add_widget(filechoser_layout)
-        
         def save_path(instance):
-            #print('path',filechoser.path)
-            #print('path',filechoser.selection)
-            self.text = filechoser.selection[0]
+            if ti.text != '':
+                self.text = filechoser.path + '/' + ti.text
+            else:
+                self.text = filechoser.selection[0]
             popup_browser.dismiss()
+            
+        def file_select(self, file): 
+            if file:
+                wimg.source = file[0]
         
         cancel_button.bind(on_press = popup_browser.dismiss)
         ok_button.bind(on_press = save_path)
+        filechoser.bind(selection = file_select)
         
         popup_browser.open()
 
