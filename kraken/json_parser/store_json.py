@@ -36,11 +36,14 @@ for section in sections:
     for fun in funcs:
 	# Create Function Object To Store OpenCV Function By Function Name
         func_obj = Function(fun)
-        func_obj.add_fname(section[0])
 
 	# Store Function Description
         des = re.search(r'</h2>\s<p>(.*?)</p>\s<dl',section[2])
         func_obj.add_description(des.group(1))
+
+        name = re.search(r'<h2>(.*?)<a',section[2])
+        fname = name.group(1)
+        func_obj.add_fname(fname)
 
         r_type = re.findall(r'^([\w\<\>]+) ([\w\<\>\:]+)\((.*)\)',fun)
         if r_type:

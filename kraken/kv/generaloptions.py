@@ -166,11 +166,7 @@ class GeneralOptions(BoxLayout):
             if child.selected:
                 child.translate(*self.translation)
                 
-    def to_json(self, instance):
-        #print('generate JSON')
-        
-        
-        
+    def run(self, instance):
         cv = []
         for child in self.drawing_space.children:
             cv.append(child)
@@ -186,9 +182,30 @@ class GeneralOptions(BoxLayout):
                      stdout=subprocess.PIPE)
         out, _ = p.communicate(jstr.encode())
         print(out.decode())
+                
+    def to_json(self, instance):
+        #print('generate JSON')
         
-        #with open('/tmp/out.json', 'w') as f:
-        #    json.dump(dict(workflow=workflow), f, cls=KrakenJsonEncoder)
+        
+        
+        cv = []
+        for child in self.drawing_space.children:
+            cv.append(child)
+            
+        
+        
+        workflow = dict(cv=cv)
+        
+        '''jstr = json.dumps(dict(workflow=workflow), cls=KrakenJsonEncoder)
+        
+        p = subprocess.Popen([sys.executable, "/home/superizer/Public/grive/My Project/kraken_backend/kraken.py"],
+                     stdin=subprocess.PIPE,
+                     stdout=subprocess.PIPE)
+        out, _ = p.communicate(jstr.encode())
+        print(out.decode())'''
+        
+        with open('/tmp/out.json', 'w') as f:
+            json.dump(dict(workflow=workflow), f, cls=KrakenJsonEncoder)
         
         
         #print("json : ", jstr)
