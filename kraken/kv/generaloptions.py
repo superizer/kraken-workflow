@@ -22,6 +22,7 @@ import subprocess
 
 from kraken.json_builder import KrakenJsonEncoder
 import json
+from kivy.uix.stacklayout import StackLayout
 
 class GeneralOptions(BoxLayout):
     group_mode = True
@@ -193,7 +194,18 @@ class GeneralOptions(BoxLayout):
                      stdin=subprocess.PIPE,
                      stdout=subprocess.PIPE)
         out, _ = p.communicate(jstr.encode())
-        print(out.decode())
+        #print(out.decode())
+        
+        status = eval(out)
+        
+        popup = Popup(title='Running Status', size_hint=(None, None), size=(400, 180))
+        content = BoxLayout(orientation='vertical')
+        content.add_widget(Label(text=status['status']))
+        b = Button(text='Close')
+        b.bind(on_press=popup.dismiss)
+        content.add_widget(b)
+        popup.content = content
+        popup.open()
                 
     def to_json(self, instance):
         
