@@ -35,6 +35,11 @@ class GeneralOptions(BoxLayout):
         ds = self.drawing_space
         for child in ds.children:
             if child.selected:
+                if child.isLine is True:
+                    child.widgetA.out_cv.remove(child.widgetB.id)
+                    child.widgetB.in_cv.remove(child.widgetA.id)
+                    child.widgetA.connect.remove([child.widgetB,child])
+                    child.widgetB.connect.remove([child.widgetA,child])
                 ds.remove_widget(child)
                 self.status_bar.selected_counter -= 1
                 
@@ -160,6 +165,7 @@ class GeneralOptions(BoxLayout):
         line_widget.canvas.add(tl.create_fig_arrow(ix,iy,fx,fy))'''
         line_widget.canvas.add(Color(1, 1, 0, 1))
         line_widget.canvas.add(tl.create_fig_arrow(ix,iy,fx,fy))
+        line_widget.isLine = True
         line_widget.name ="Line"
         line_widget.id = str(uuid.uuid1())
         
