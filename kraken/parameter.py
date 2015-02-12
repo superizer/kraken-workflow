@@ -35,7 +35,8 @@ class InputForm(TextInput):
         
         filechoser_layout = AnchorLayout()
         
-        filechoser = FileChooserIconView( size_hint = (0.75,0.85), path=settings['kraken_path'] +'/picture') #, multiselect = True)
+        #filechoser = FileChooserIconView( size_hint = (0.75,0.85), path=settings['kraken_path'] +'/picture') #, multiselect = True)
+        filechoser = FileChooserIconView( size_hint = (0.75,0.85), path='/home') #, multiselect = True)
         filechoser_list_layout = AnchorLayout(anchor_x='left', anchor_y='top')
         filechoser_list_layout.add_widget(filechoser)
         

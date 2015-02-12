@@ -196,6 +196,7 @@ class GeneralOptions(BoxLayout):
         out, _ = p.communicate(jstr.encode())
         #print(out.decode())
         
+        print('out',settings['kraken_path'] + '/kraken_backend/kraken.py')
         status = eval(out)
         
         popup = Popup(title='Running Status', size_hint=(None, None), size=(400, 180))
@@ -213,7 +214,8 @@ class GeneralOptions(BoxLayout):
         
         filechoser_layout = AnchorLayout()
         
-        filechoser = FileChooserIconView( size_hint = (0.75,0.85), path=settings['kraken_path'] +'/picture') #, multiselect = True)
+        #filechoser = FileChooserIconView( size_hint = (0.75,0.85), path=settings['kraken_path'] +'/picture') #, multiselect = True)
+        filechoser = FileChooserIconView( size_hint = (0.75,0.85), path='/home') #, multiselect = True)
         filechoser_list_layout = AnchorLayout(anchor_x='left', anchor_y='top')
         filechoser_list_layout.add_widget(filechoser)
         
