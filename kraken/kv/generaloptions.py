@@ -190,7 +190,7 @@ class GeneralOptions(BoxLayout):
         
         jstr = json.dumps(dict(workflow=workflow), cls=KrakenJsonEncoder)
         
-        p = subprocess.Popen([sys.executable, "/home/superizer/Public/grive/My Project/kraken_backend/kraken.py"],
+        p = subprocess.Popen([sys.executable, settings['kraken_path'] + '/kraken_backend/kraken.py'],
                      stdin=subprocess.PIPE,
                      stdout=subprocess.PIPE)
         out, _ = p.communicate(jstr.encode())

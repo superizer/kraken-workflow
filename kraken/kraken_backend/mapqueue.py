@@ -1,0 +1,3 @@
+
+class MapQueue():
+    queues = {} 
