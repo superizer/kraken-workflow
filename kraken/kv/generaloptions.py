@@ -40,39 +40,25 @@ class GeneralOptions(BoxLayout):
                     child.widgetB.in_cv.remove(child.widgetA.id)
                     child.widgetA.connect.remove([child.widgetB,child])
                     child.widgetB.connect.remove([child.widgetA,child])
+                else:
+                    for c in child.connect:
+                        if child.id in c[0].in_cv:
+                            c[0].in_cv.remove(child.id)
+                        if child.id in c[0].out_cv:
+                            c[0].out_cv.remove(child.id)
+                        a = []
+                        for k in c[0].connect:
+                            if k[0] is child:
+                                ds.remove_widget(k[1])
+                            else:
+                                a.append(k)
+                        c[0].connect = a
                 ds.remove_widget(child)
                 self.status_bar.selected_counter -= 1
                 
     def remove_widget(self,widget):
         ds = self.drawing_space
         ds.remove_widget(widget)
-        
-    def remove_line(self,instance):
-        ds = self.drawing_space
-        for child in ds.children:
-            if child.selected and child.line != None:
-                ds.remove_widget(child.line)
-                child.line = None
-                child.to_widget.line = None
-                child.to_widget.to_widget = None
-                child.to_widget = None
-                #self.status_bar.selected_counter -= 1
-        self.unselect_all()
-        
-    def remove_line_between(self,instance):
-        if self.status_bar.selected_counter is 2:
-            ds = self.drawing_space
-          
-            for child in ds.children:
-                if child.selected:
-                    ds.remove_widget(child.line)
-                    child.line = None
-                    child.to_widget.line = None
-                    child.to_widget.to_widget = None
-                    child.to_widget = None
-                    break
-                    
-            self.unselect_all()
 
     def line(self, instance):
         if self.status_bar.selected_counter is 2:
