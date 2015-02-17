@@ -42,7 +42,7 @@ class ToolRectangle(ToolButton):
         widget = self.create_widget(ix,iy,fx,fy)
         (ix,iy) = widget.to_local(ix,iy,relative=True)
         (fx,fy) = widget.to_local(fx,fy,relative=True)
-        widget.canvas.add(Color(1, 0, 0, 1))
+        widget.canvas.add(Color(0, 0.5, 0.5, 1))
         widget.canvas.add(Rectangle(pos=(ix, iy), size=(w,h)))
         widget.name = self.parent.tool_function.text
         widget.pars = self.parent.tool_function.map_pars[self.parent.tool_parameter.text]
@@ -64,7 +64,7 @@ class ToolRectangle(ToolButton):
     
 class ToolLine(ToolButton):
     def create_figure(self,ix,iy,fx,fy):
-        return Line(points=[ix, iy, fx, fy])
+        return Line(points=[ix, iy, fx, fy], width=1)
     
     def create_fig_arrow(self,ix,iy,fx,fy):
         

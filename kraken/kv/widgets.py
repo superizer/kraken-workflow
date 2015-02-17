@@ -1,5 +1,5 @@
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.graphics import Line
+from kivy.graphics import Line, Color
 
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
@@ -12,6 +12,7 @@ class DraggableWidget(RelativeLayout):
     def __init__(self,  **kwargs):
         
         self.selected = None
+        self.selected_par = None
         self.touched = False
         
         self.isLine = False
@@ -43,8 +44,19 @@ class DraggableWidget(RelativeLayout):
 
     def on_touch_down(self, touch):
         if self.collide_point(touch.x, touch.y):
+            
+            if touch.is_double_tap and self.isLine == False and len(self.pars) != 0:
+                if self.parent.tool_box.height is 200:
+                    pm = ParameterMenu(self.pars,self.parent.tool_box,self)
+                    pm.create_pars_layout()
+                    
+                    with self.canvas:
+                        Color(1,1,0,1)
+                        self.selected_par = Line(rectangle=(0,0,self.width,self.height), dash_offset=2,  width=2)
+            
             if self.touched is False:
                 self.touched = True
+            
                 #if self.line is None:
                 if self.parent.status_bar.selected_counter == 0:
                     self.count = 1
@@ -56,12 +68,6 @@ class DraggableWidget(RelativeLayout):
                 self.touched = False
                 self.unselect()
                 
-            if touch.is_double_tap and self.isLine == False and len(self.pars) != 0:
-                if self.parent.tool_box.height is 200:
-                    pm = ParameterMenu(self.pars,self.parent.tool_box)
-                    pm.create_pars_layout()
-                #print('widget pars',self.pars)
-                
             return True
         return super(DraggableWidget, self).on_touch_down(touch)
 
@@ -71,7 +77,8 @@ class DraggableWidget(RelativeLayout):
             self.ix = self.center_x
             self.iy = self.center_y
             with self.canvas:
-                self.selected = Line(rectangle=(0,0,self.width,self.height), dash_offset=2)
+                Color(1,1,1,1)
+                self.selected = Line(rectangle=(0,0,self.width,self.height), dash_offset=2,  width=2)
 
     def on_touch_move(self, touch):
         (x,y) = self.parent.to_parent(touch.x, touch.y)
@@ -117,7 +124,8 @@ class DraggableWidget(RelativeLayout):
 
     def unselect(self):
         if self.selected:
-            self.parent.status_bar.selected_counter -= 1;
+            if self.parent.status_bar.selected_counter is not 0:
+                self.parent.status_bar.selected_counter -= 1;
             #print('self.selected : ',str(self.selected) )
             self.canvas.remove(self.selected)
             self.selected = None  

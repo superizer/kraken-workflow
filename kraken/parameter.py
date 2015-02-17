@@ -89,12 +89,13 @@ class InputForm(TextInput):
         popup_browser.open()
 
 class ParameterMenu():
-    def __init__(self, pars_dict,toolbox):
+    def __init__(self, pars_dict,toolbox,widget):
         self.pars_dict = pars_dict
         self.toolbox = toolbox
         self.input_pars = GridLayout(cols=2,size =(300,50))
         self.option_pars = GridLayout(cols=2,size =(300,50))
         self.list_input_pars = []
+        self.widget = widget
         
     def create_pars_layout(self):
         
@@ -154,6 +155,10 @@ class ParameterMenu():
             
             self.toolbox.remove_widget(self.option_pars)
             self.toolbox.height = 200
+            
+            if self.widget.selected_par:
+                self.widget.canvas.remove(self.widget.selected_par)
+                self.widget.selected_par = None 
         
         def cancel_pars(instance):
             #print('cancel parameter')
@@ -169,6 +174,9 @@ class ParameterMenu():
             self.toolbox.remove_widget(self.option_pars)
             self.toolbox.height = 200
             
+            if self.widget.selected_par:
+                self.widget.canvas.remove(self.widget.selected_par)
+                self.widget.selected_par = None 
         
         
         btn_save = Button(text='Save')
