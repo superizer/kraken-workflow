@@ -29,6 +29,7 @@ class GeneralOptions(BoxLayout):
     translation = ListProperty(None)
 
     def clear(self, instance):
+        self.status_bar.selected_counter = 0
         self.drawing_space.clear_widgets()
 
     def remove(self, instance):
@@ -311,7 +312,7 @@ class GeneralOptions(BoxLayout):
         filechoser_layout.add_widget(button_layout)
         filechoser_layout.add_widget(image_layout)
         
-        popup_browser = Popup(title = 'Save File')
+        popup_browser = Popup(title = 'Open File')
         popup_browser.add_widget(filechoser_layout)
         def save_path(instance):
             if ti.text != '':
@@ -321,16 +322,34 @@ class GeneralOptions(BoxLayout):
            
             # Open From File
             ds = self.drawing_space
+            self.clear(instance)
             
             with open(path) as json_file:
                 json_data = json.load(json_file)
                 funs = json_data['workflow']['cv']
                 for fun in funs:
                     if fun['name'] != 'Line':
-                        print(fun['name'])
-                        print('position',fun['pos']['x'],fun['pos']['y'])
                         tr = ToolRectangle()
-                        tr.redraw(ds,fun['pos']['x'],fun['pos']['y'],fun['name'])
+                        tr.redraw(ds,fun['pos']['x'],fun['pos']['y'],fun['name'],fun['id'],fun['pars'],fun['in_cv'],fun['out_cv'],fun['level'])
+                for fun in funs:
+                    if fun['name'] != 'Line':
+                        for child in ds.children:
+                            if child.id is fun['id']:
+                                a = child
+                                break
+                        for b in fun['out_cv']:
+                            for child in ds.children:
+                                if child.id == b:
+                                    line_widget = self.new_line(a, child)
+                                    line_widget.widgetA = a
+                                    line_widget.widgetB = child
+                                    
+                                    line_widget.isLine = True
+                                    line_widget.name = "Line"
+                                    line_widget.id = str(uuid.uuid1())
+            
+                                    a.connect.append([child, line_widget])
+                                    child.connect.append([a, line_widget])
            
             popup_browser.dismiss()
             

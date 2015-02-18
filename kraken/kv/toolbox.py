@@ -57,7 +57,7 @@ class ToolRectangle(ToolButton):
         
         ds.add_widget(widget)
     
-    def redraw(self, ds, x, y, name): #, par, id):
+    def redraw(self, ds, x, y, name, id, par, in_cv, out_cv,level):
                    
         h = 60
         w = 150
@@ -72,8 +72,11 @@ class ToolRectangle(ToolButton):
         widget.canvas.add(Color(0, 0.5, 0.5, 1))
         widget.canvas.add(Rectangle(pos=(ix, iy), size=(w,h)))
         widget.name = name
-        #widget.pars = par
-        #widget.id = id
+        widget.pars = par
+        widget.id = id
+        widget.in_cv = in_cv
+        widget.out_cv = out_cv
+        widget.level = level
         
         l = Label(text=widget.name)
         widget.add_widget(l)
