@@ -7,22 +7,16 @@
         on_press: root.clear(*args)
         ##background_color: (0.5,0.5,0.5,0.8)
     Button:
-        text: 'New Line'
+        text: 'Line'
         on_release: root.line(*args)
-    ##Button:
-    ##    text: 'Remove Component'
-    ##    on_release: root.remove(*args)
-    ##Button:
-    ##    text: 'Remove Line Component'
-    ##    on_release: root.remove_line(*args)
-    ##Button:
-    ##    text: 'Remove Line Between'
-    ##    on_release: root.remove_line_between(*args)
     Button:
     	text: 'Remove'
     	on_release: root.remove(*args)
     Button:
-        text: 'Export to JSON'
+        text: 'Load'
+        on_release: root.load_json(*args)
+    Button:
+        text: 'Save'
         on_release: root.to_json(*args)
     Button:
         text: 'Run'
