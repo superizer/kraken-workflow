@@ -19,7 +19,7 @@ import cv2
 
 class InputForm(TextInput):
     
-    def __init__(self,toolbox,  **kwargs):
+    def __init__(self, toolbox,  **kwargs):
         self.toolbox = toolbox
         super(InputForm, self).__init__(**kwargs)
         
@@ -98,19 +98,16 @@ class ParameterMenu():
         self.widget = widget
         
     def create_pars_layout(self):
-        
         #self.input_pars.add_widget(Label(text = 'Parameter1'))
         #self.input_pars.add_widget(TextInput())
         
         self.input_pars = GridLayout(cols=2,size =(300,50*len(self.pars_dict)))
         
         for par in self.pars_dict:
-            #self.input_pars.add_widget(Label(text = 'Parameter1'))
-            #self.input_pars.add_widget(TextInput())
+
             self.input_pars = GridLayout(cols=2,size =(300,50))
             self.input_pars.add_widget(Label(text = par['name']))
-            #self.input_pars.add_widget(TextInput(text=par['value']))
-            
+
             ti = InputForm(text=str(par['value']),toolbox=self.toolbox)
             self.input_pars.add_widget(ti)
             
@@ -121,7 +118,7 @@ class ParameterMenu():
             self.toolbox.add_widget(par)
             
         def save_pars(instance):
-            
+
             par_name = ''
             par_value = ''
             
@@ -132,7 +129,7 @@ class ParameterMenu():
                         par_value = child.text
                     elif type(child) is Label:
                         par_name = child.text
-                
+                        
                 for parr in self.pars_dict:
                     if parr['name'] == par_name and par_value != '':
                         if parr['type'] == 'int':

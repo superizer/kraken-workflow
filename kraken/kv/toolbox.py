@@ -13,6 +13,7 @@ from kraken.configuration import settings
 
 import math
 import uuid
+import copy
 
 class ToolButton(ToggleButton):
     def on_touch_down(self, touch):
@@ -45,7 +46,7 @@ class ToolRectangle(ToolButton):
         widget.canvas.add(Color(0, 0.5, 0.5, 1))
         widget.canvas.add(Rectangle(pos=(ix, iy), size=(w,h)))
         widget.name = self.parent.tool_function.text
-        widget.pars = self.parent.tool_function.map_pars[self.parent.tool_parameter.text]
+        widget.pars = copy.deepcopy(self.parent.tool_function.map_pars[self.parent.tool_parameter.text])
         #widget.pars = self.parent.tool_parameter.text
         widget.id = str(uuid.uuid1())
         
@@ -57,7 +58,7 @@ class ToolRectangle(ToolButton):
         
         ds.add_widget(widget)
     
-    def redraw(self, ds, x, y, name, id, par, in_cv, out_cv,level):
+    def redraw(self, ds, x, y, name, wid, par, in_cv, out_cv,level):
                    
         h = 60
         w = 150
@@ -73,7 +74,7 @@ class ToolRectangle(ToolButton):
         widget.canvas.add(Rectangle(pos=(ix, iy), size=(w,h)))
         widget.name = name
         widget.pars = par
-        widget.id = id
+        widget.id = wid
         widget.in_cv = in_cv
         widget.out_cv = out_cv
         widget.level = level
