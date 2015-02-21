@@ -177,8 +177,6 @@ class GeneralOptions(BoxLayout):
         for child in self.drawing_space.children:
             cv.append(child)
             
-        
-        
         workflow = dict(cv=cv)
         
         jstr = json.dumps(dict(workflow=workflow), cls=KrakenJsonEncoder)

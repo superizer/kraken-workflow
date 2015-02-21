@@ -13,7 +13,6 @@ class FuncThread(threading.Thread):
         self.uid = uid
  
     def run(self):
-        #print("run: ",self.target)
         #print(self.target, self.args)
         kwargs = {}
         for par in self.kwargs.items():

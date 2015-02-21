@@ -14,7 +14,7 @@ if __name__ == "__main__":
     #f = str(sys.argv[1])
     #map_queue = {}
     thread_queue = queue.PriorityQueue()
-
+    
     #with open(f) as json_file:
     json_file = input()
     if json_file:
