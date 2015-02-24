@@ -132,7 +132,7 @@ class ParameterMenu():
                         
                 for parr in self.pars_dict:
                     if parr['name'] == par_name and par_value != '':
-                        if parr['type'] == 'int':
+                        '''if parr['type'] == 'int':
                             if len(par_value) > 6 and (par_value[0:6] == "COLOR_" or par_value[0:3] == "cv2"):
                                 if par_value[0:6] == "COLOR_":
                                     par_value = 'cv2.' + par_value
@@ -142,7 +142,16 @@ class ParameterMenu():
                         elif parr['type'] == 'double' or parr['type'] == 'float':
                             parr['value'] = float(par_value)
                         else:
-                            parr['value'] = par_value
+                            #parr['value'] = par_value
+                            try:
+                                v = eval(par_value)
+                            except:
+                                v = par_value
+                            print('type',type(v))
+                            parr['value'] = v'''
+                        parr['value'] = par_value
+                    elif parr['name'] == par_name and par_value == '':
+                        parr['value'] = ''
                 
                 self.toolbox.remove_widget(par)
             

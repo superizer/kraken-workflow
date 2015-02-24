@@ -25,6 +25,23 @@ if __name__ == "__main__":
             if fun['name'] != 'Line':
                 dic_param = {}
                 for par in fun['pars']:
+                    if par['value'] != '':
+                        if par['type'] == 'int':
+                            if len(par['value']) > 6 and (par['value'][0:6] == "COLOR_" or par['value'][0:3] == "cv2"):
+                                if par['value'][0:6] == "COLOR_":
+                                    par['value'] = 'cv2.' + par['value']
+                                par['value'] = eval(par['value'])
+                            else:
+                                par['value'] = int(par['value'])
+                        elif par['type'] == 'double' or par['type'] == 'float':
+                            par['value'] = float(par['value'])
+                        else:
+                            #parr['value'] = par_value
+                            try:
+                                v = eval(par['value'])
+                            except:
+                                v = par['value']
+                            par['value'] = v
                     dic_param[str(par['name'])] = par['value']
                 #print('dic_param ' + str(dic_param))
             
