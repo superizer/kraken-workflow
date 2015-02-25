@@ -1,5 +1,6 @@
 import threading
 import time
+from cv2 import *
 from mapqueue import MapQueue
  
 class FuncThread(threading.Thread):
@@ -34,6 +35,10 @@ class FuncThread(threading.Thread):
         #print(kwargs)
         output = self.target(**kwargs)
         #print(self.target,'output',output)
+        if self.target is not imwrite:
+            imwrite('/tmp/images/' + self.uid + '.jpg',output)
+        else:
+            imwrite('/tmp/images/' + self.uid + '.jpg',kwargs['img'])
         for i  in self.out_cv_q:
             MapQueue.queues[self.uid,i].put(output)
 

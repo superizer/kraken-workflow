@@ -1,6 +1,7 @@
 from cv2 import *
 import sys
 import json
+import os
 import threading
 import queue
 from mapqueue import MapQueue
@@ -53,6 +54,9 @@ if __name__ == "__main__":
                 t = FuncThread(target = eval(fun['name']),kwargs = dic_param, in_cv_q = fun['in_cv'], out_cv_q = fun['out_cv'],uid = fun['id'])
                 #print(fun['level'])
                 thread_queue.put(Job(fun['level'],t))
+                
+        if not os.path.exists('/tmp/images'):
+            os.makedirs('/tmp/images')
 
         while not thread_queue.empty():
             t = thread_queue.get()

@@ -16,6 +16,7 @@ from kivy.core.window import Window
 from .configuration import settings
 
 import cv2
+import os
 
 class InputForm(TextInput):
     
@@ -96,6 +97,7 @@ class ParameterMenu():
         self.option_pars = GridLayout(cols=2,size =(300,50))
         self.list_input_pars = []
         self.widget = widget
+        self.pic = AnchorLayout(anchor_x='right', anchor_y='top')
         
     def create_pars_layout(self):
         #self.input_pars.add_widget(Label(text = 'Parameter1'))
@@ -131,27 +133,12 @@ class ParameterMenu():
                         par_name = child.text
                         
                 for parr in self.pars_dict:
-                    if parr['name'] == par_name and par_value != '':
-                        '''if parr['type'] == 'int':
-                            if len(par_value) > 6 and (par_value[0:6] == "COLOR_" or par_value[0:3] == "cv2"):
-                                if par_value[0:6] == "COLOR_":
-                                    par_value = 'cv2.' + par_value
-                                parr['value'] = eval(par_value)
-                            else:
-                                parr['value'] = int(par_value)
-                        elif parr['type'] == 'double' or parr['type'] == 'float':
-                            parr['value'] = float(par_value)
-                        else:
-                            #parr['value'] = par_value
-                            try:
-                                v = eval(par_value)
-                            except:
-                                v = par_value
-                            print('type',type(v))
-                            parr['value'] = v'''
+                    '''if parr['name'] == par_name and par_value != '':
                         parr['value'] = par_value
                     elif parr['name'] == par_name and par_value == '':
-                        parr['value'] = ''
+                        parr['value'] = '''''
+                    if parr['name'] == par_name:
+                        parr['value'] = par_value
                 
                 self.toolbox.remove_widget(par)
             
@@ -160,6 +147,7 @@ class ParameterMenu():
             self.option_pars.clear_widgets()
             
             self.toolbox.remove_widget(self.option_pars)
+            self.toolbox.parent.remove_widget(self.pic)
             self.toolbox.height = 200
             
             if self.widget.selected_par:
@@ -178,6 +166,7 @@ class ParameterMenu():
             self.list_input_pars.clear()
                 
             self.toolbox.remove_widget(self.option_pars)
+            self.toolbox.parent.remove_widget(self.pic)
             self.toolbox.height = 200
             
             if self.widget.selected_par:
@@ -193,6 +182,10 @@ class ParameterMenu():
         
         self.option_pars.add_widget(btn_save)
         self.option_pars.add_widget(btn_cancel)
+        
+        if os.path.exists('/tmp/images/' + self.widget.id + '.jpg'):
+            self.pic.add_widget(Image(source='/tmp/images/' + self.widget.id + '.jpg',size_hint = (0,0),  size=(200,Window.size[1]), pos_hint =(0,1)))
+            self.toolbox.parent.add_widget(self.pic)
             
         
         self.toolbox.height = 250 + len(self.pars_dict)*50
