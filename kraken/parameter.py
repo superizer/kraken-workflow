@@ -145,6 +145,7 @@ class ParameterMenu():
             self.list_input_pars.clear()
             self.input_pars.clear_widgets()
             self.option_pars.clear_widgets()
+            self.pic.clear_widgets()
             
             self.toolbox.remove_widget(self.option_pars)
             self.toolbox.parent.remove_widget(self.pic)
@@ -164,6 +165,7 @@ class ParameterMenu():
                 self.toolbox.remove_widget(par)
                 
             self.list_input_pars.clear()
+            self.pic.clear_widgets()
                 
             self.toolbox.remove_widget(self.option_pars)
             self.toolbox.parent.remove_widget(self.pic)
@@ -183,9 +185,13 @@ class ParameterMenu():
         self.option_pars.add_widget(btn_save)
         self.option_pars.add_widget(btn_cancel)
         
+        
         if os.path.exists('/tmp/images/' + self.widget.id + '.jpg'):
-            self.pic.add_widget(Image(source='/tmp/images/' + self.widget.id + '.jpg',size_hint = (0,0),  size=(200,Window.size[1]), pos_hint =(0,1)))
+            img = Image(source='/tmp/images/' + self.widget.id + '.jpg', size_hint = (0,0),  size=(200,Window.size[1]), pos_hint =(0,1))
+            img.reload()
+            self.pic.add_widget(img)
             self.toolbox.parent.add_widget(self.pic)
+            
             
         
         self.toolbox.height = 250 + len(self.pars_dict)*50

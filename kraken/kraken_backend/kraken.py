@@ -2,6 +2,7 @@ from cv2 import *
 import sys
 import json
 import os
+import glob
 import threading
 import queue
 from mapqueue import MapQueue
@@ -11,6 +12,11 @@ from functhread import FuncThread
 #print(sys.argv[1])
 
 if __name__ == "__main__":
+    
+    #remove file
+    files = glob.glob('/tmp/images/*.jpg')
+    for f in files:
+        os.remove(f)
 
     #f = str(sys.argv[1])
     #map_queue = {}

@@ -35,10 +35,11 @@ class FuncThread(threading.Thread):
         #print(kwargs)
         output = self.target(**kwargs)
         #print(self.target,'output',output)
-        if self.target is not imwrite:
-            imwrite('/tmp/images/' + self.uid + '.jpg',output)
-        else:
+        if self.target == imwrite or self.target == putText:
             imwrite('/tmp/images/' + self.uid + '.jpg',kwargs['img'])
+            
+        else:
+            imwrite('/tmp/images/' + self.uid + '.jpg',output)
         for i  in self.out_cv_q:
             MapQueue.queues[self.uid,i].put(output)
 
