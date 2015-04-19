@@ -2,8 +2,11 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.label import Label
 from kivy.graphics import Line, Rectangle, Color, Triangle, Ellipse
 from kivy.uix.spinner import Spinner
+from kivy.uix.bubble import Bubble,BubbleButton
+from kivy.uix.button import Button
 
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 
@@ -152,6 +155,10 @@ class ToolSelectFunction(Spinner):
     
     def __init__(self,  **kwargs):
         self.map_pars = {}
+        self.bubble = None
+        self.bubb_layout = None
+        self.button = None
+        self.func_des = None
         super(ToolSelectFunction, self).__init__(**kwargs)
     
     def _on_dropdown_select(self, instance, data, *largs):
@@ -163,8 +170,32 @@ class ToolSelectFunction(Spinner):
     def set_select_parameter(self,function):
         self.parent.tool_parameter.text='Select Parameter'
         self.map_pars = self.parent.tool_library.read_obj.get_pars_type(function)
+        self.func_des = self.parent.tool_library.read_obj.get_func_des(function)
         #print('map_pars',map_pars)
         self.parent.tool_parameter.values=self.map_pars.keys()
+        
+        
+        
+        if self.bubble is None:
+            
+            self.bubble = Bubble(size_hint=(.3, .2))
+            self.bubb_layout = AnchorLayout(anchor_x='right', anchor_y='top')
+            
+            def remove_bubble(instance):
+                self.bubb_layout.remove_widget(self.bubble)
+                self.parent.parent.remove_widget(self.bubb_layout)
+                self.bubble = None
+                self.bubb_layout= None
+                
+            self.button = BubbleButton(text=self.func_des, halign = 'left', valign='middle', text_size = (300,300))
+            self.button.bind(on_press=remove_bubble)
+            self.bubble.add_widget(self.button)
+            self.bubble.arrow_pos = 'left_mid'
+            self.bubb_layout.add_widget(self.bubble)
+            self.parent.parent.parent.add_widget(self.bubb_layout)
+        
+        else:
+            self.button.text = self.func_des
             
         
 class ToolSelectParameter(Spinner):

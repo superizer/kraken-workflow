@@ -42,6 +42,12 @@ class CVFunctionParser():
     def get_list_funs(self):
         return self.list_funcs
     
+    def get_func_des(self,func):
+        for fun in self.dic_funcs.values():
+            if fun.fname == func:
+                return fun.description
+        return None
+    
     def get_pars_in_funcs(self,func):
         pars = []
         for fun in self.dic_funcs.values():
