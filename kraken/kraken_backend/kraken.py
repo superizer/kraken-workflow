@@ -8,6 +8,7 @@ import queue
 from mapqueue import MapQueue
 from job import Job
 from functhread import FuncThread
+import numpy as np
 
 #print(sys.argv[1])
 
@@ -34,7 +35,7 @@ if __name__ == "__main__":
                 for par in fun['pars']:
                     if par['value'] != '':
                         if par['type'] == 'int':
-                            if len(par['value']) > 6 and (par['value'][0:6] == "COLOR_" or par['value'][0:3] == "cv2"):
+                            if type(par) is str and len(par['value']) > 6 and (par['value'][0:6] == "COLOR_" or par['value'][0:3] == "cv2"):
                                 if par['value'][0:6] == "COLOR_":
                                     par['value'] = 'cv2.' + par['value']
                                 par['value'] = eval(par['value'])

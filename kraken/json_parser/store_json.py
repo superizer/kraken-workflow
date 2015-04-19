@@ -10,7 +10,7 @@ from cvfunctions import Function,Parameter
 
 # Open OpenCV Document From OpenCV Website
 
-response = request.urlopen('http://docs.opencv.org/modules/core/doc/drawing_functions.html')        
+response = request.urlopen('http://docs.opencv.org/doc/tutorials/imgproc/erosion_dilatation/erosion_dilatation.html')        
 #response = request.urlopen('http://docs.opencv.org/modules/imgproc/doc/filtering.html')
 #response = request.urlopen('http://docs.opencv.org/modules/imgproc/doc/miscellaneous_transformations.html')
 #response = request.urlopen('http://docs.opencv.org/modules/imgproc/doc/geometric_transformations.html')
@@ -115,7 +115,7 @@ for fun in dic_funcs:
     #print('\n\n')	
 function = dict(cv=cv)
    
-with open('../cvlibrary/out.json', 'w') as f:
+with open('../cvlibrary/erosion_dilatation.json', 'w') as f:
     json.dump(dict(function=function), f, cls=FunctionJsonEncoder)
 
 
