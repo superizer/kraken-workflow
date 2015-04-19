@@ -65,10 +65,16 @@ if __name__ == "__main__":
         if not os.path.exists('/tmp/images'):
             os.makedirs('/tmp/images')
 
+        dtime = {}
         while not thread_queue.empty():
             t = thread_queue.get()
             t.thread.start()
             t.thread.join()
+            dtime[t.thread.uid] = t.thread.time
+        
+        with open('/tmp/images/time.json', 'w') as f:
+            json.dump(dict(time = dtime), f)
+        
     response = dict(status = 'Success')
     print(response)
 

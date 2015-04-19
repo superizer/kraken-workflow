@@ -12,6 +12,7 @@ class FuncThread(threading.Thread):
         self.in_cv_q = in_cv_q
         self.out_cv_q = out_cv_q
         self.uid = uid
+        self.time = None
  
     def run(self):
         #print(self.target, self.args)
@@ -33,7 +34,10 @@ class FuncThread(threading.Thread):
         kwargs = dict((k, v) for k, v in kwargs.items() if v != '')
         #print('kwargs',kwargs)
         #print(kwargs)
+        t0 = time.clock()
         output = self.target(**kwargs)
+        self.time = round((time.clock() - t0)*1000,4)
+        
         #print(self.target,'output',output)
         if self.target == imwrite or self.target == putText:
             imwrite('/tmp/images/' + self.uid + '.jpg',kwargs['img'])
