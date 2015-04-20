@@ -165,16 +165,8 @@ class ToolSelectFunction(Spinner):
         self.text = data
         self.is_open = False
         #print('select function',self.text)
+        self.func_des = self.parent.tool_library.read_obj.get_func_des(self.text)
         self.set_select_parameter(self.text)
-        
-    def set_select_parameter(self,function):
-        self.parent.tool_parameter.text='Select Parameter'
-        self.map_pars = self.parent.tool_library.read_obj.get_pars_type(function)
-        self.func_des = self.parent.tool_library.read_obj.get_func_des(function)
-        #print('map_pars',map_pars)
-        self.parent.tool_parameter.values=self.map_pars.keys()
-        
-        
         
         if self.bubble is None:
             
@@ -196,6 +188,13 @@ class ToolSelectFunction(Spinner):
         
         else:
             self.button.text = self.func_des
+        
+    def set_select_parameter(self,function):
+        self.parent.tool_parameter.text='Select Parameter'
+        self.map_pars = self.parent.tool_library.read_obj.get_pars_type(function)
+        
+        #print('map_pars',map_pars)
+        self.parent.tool_parameter.values=self.map_pars.keys()
             
         
 class ToolSelectParameter(Spinner):
