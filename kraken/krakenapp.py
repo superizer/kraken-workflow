@@ -22,7 +22,7 @@ class KrakenLayout(AnchorLayout):
 class KrakenApp(App):
     def build(self):
         Window.size = (1400,800)
-        #Window.clearcolor = (0.85,0.85,0.85,1)
+        #Window.clearcolor = (1, 1, 1, 1)
         kraken = KrakenLayout()
         lib = os.listdir(settings['kraken_path'] + '/cvlibrary')
         kraken.tool_box.tool_library.values = lib

@@ -3,21 +3,32 @@
     orientation: 'horizontal'
     padding: 2
     Button:
-        text: 'Clear'
+        text: '[b]Clear[/b]'
         on_press: root.clear(*args)
-        ##background_color: (0.5,0.5,0.5,0.8)
+        background_color: (0.46,0.46,0.46,0.6)
+        markup: True
     Button:
-        text: 'Line'
+        text: '[b]Line[/b]'
         on_release: root.line(*args)
+        background_color: (0.46,0.46,0.46,0.6)
+        markup: True
     Button:
-    	text: 'Remove'
+    	text: '[b]Remove[/b]'
     	on_release: root.remove(*args)
+    	background_color: (0.46,0.46,0.46,0.6)
+    	markup: True
     Button:
-        text: 'Load'
+        text: '[b]Load[/b]'
         on_release: root.load_json(*args)
+        background_color: (0.46,0.46,0.46,0.6)
+        markup: True
     Button:
-        text: 'Save'
+        text: '[b]Save[/b]'
         on_release: root.to_json(*args)
+        background_color: (0.46,0.46,0.46,0.6)
+        markup: True
     Button:
-        text: 'Run'
+        text: '[b]Run[/b]'
         on_release: root.run(*args)
+        background_color: (0.46,0.46,0.46,0.6)
+        markup: True

@@ -165,7 +165,7 @@ class ToolSelectFunction(Spinner):
         self.text = data
         self.is_open = False
         #print('select function',self.text)
-        self.func_des = self.parent.tool_library.read_obj.get_func_des(self.text)
+        self.func_des = '[color=#ffff00][i][b]' + self.parent.tool_library.read_obj.get_func_des(self.text)+ '[/i][/b][/color]'
         self.set_select_parameter(self.text)
         
         if self.bubble is None:
@@ -179,10 +179,10 @@ class ToolSelectFunction(Spinner):
                 self.bubble = None
                 self.bubb_layout= None
                 
-            self.button = BubbleButton(text=self.func_des, halign = 'left', valign='middle', text_size = (300,300))
+            self.button = BubbleButton(text=self.func_des, halign = 'left', valign='middle', text_size = (300,300), background_color = (0, 0.5, 0.5, 1),markup=True)
             self.button.bind(on_press=remove_bubble)
             self.bubble.add_widget(self.button)
-            self.bubble.arrow_pos = 'left_mid'
+            self.bubble.arrow_pos = 'top_mid'
             self.bubb_layout.add_widget(self.bubble)
             self.parent.parent.parent.add_widget(self.bubb_layout)
         

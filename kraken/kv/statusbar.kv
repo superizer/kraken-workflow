@@ -3,11 +3,15 @@
     msg_label: _msg_label
     orientation: 'horizontal'
     Label:
-        text: 'Total Figures: ' + str(root.counter)
+        text: '[b][color=3333ff]Total Figures: ' + str(root.counter) + '[/color][/b]'
+        markup: True
     Label:
-        text: 'Selected Figures: ' + str(root.selected_counter) 
+        text: '[b][color=3333ff]Selected Figures: ' + str(root.selected_counter) + '[/color][/b]'
+        markup: True
     Label:
         id: _msg_label
-        text: "Kraken started"
+        text: '[b][color=3333ff]Kraken started[/color][/b]'
+        markup: True
     Label:
-    	text: 'Processing Time: ' + str(root.process_time) + ' ms'
+    	text: '[b][color=3333ff]Processing Time: ' + str(root.process_time) + ' ms' + '[/color][/b]'
+    	markup: True
