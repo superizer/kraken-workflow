@@ -1,6 +1,7 @@
+from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Rotate, Color
-from kivy.properties import NumericProperty, ListProperty
+from kivy.properties import NumericProperty, ListProperty, DictProperty
 from .toolbox import ToolLine, ToolRectangle
 from numpy import ix_
 
@@ -19,6 +20,7 @@ import math
 import uuid
 import sys
 import subprocess
+import os
 
 from kraken.json_builder import KrakenJsonEncoder
 import json
@@ -27,6 +29,7 @@ from kivy.uix.stacklayout import StackLayout
 class GeneralOptions(BoxLayout):
     group_mode = True
     translation = ListProperty(None)
+    dic_name = DictProperty(None)
 
     def clear(self, instance):
         self.status_bar.selected_counter = 0
@@ -360,6 +363,44 @@ class GeneralOptions(BoxLayout):
         filechoser.bind(selection = file_select)
         
         popup_browser.open()
+        
+    def show_time(self, instance):
+        if instance.state == 'down':
+            json_data = None
+            if os.path.exists('/tmp/images/time.json'):
+                f = open('/tmp/images/time.json')
+                json_data = json.load(f)
+                '''if self.id in json_data['time']:
+                    self.parent.status_bar.process_time = json_data['time'][self.id]
+                else:
+                    self.parent.status_bar.process_time = 0'''
+            else:
+                return
+            
+            for child in self.drawing_space.children:
+                #print('child.name = ' + child.name)
+                t = ''
+                if child.name is not 'Line':
+                    #child.clear_widgets()
+                    for c in child.children:
+                        if type(c) is Label:
+                            t = c.text
+                            break
+                    self.dic_name[child.id] = t
+                    child.clear_widgets()    
+                    l = Label(text= '[b]' + t + ' \n( ' + str(json_data['time'][child.id]) +' ms )[/b]',markup=True)
+                    child.add_widget(l)
+        elif instance.state == 'normal':
+            if not os.path.exists('/tmp/images/time.json'):
+                return
+            for child in self.drawing_space.children:
+                if child.name is not 'Line':
+                    child.clear_widgets()    
+                    l = Label(text=self.dic_name[child.id],markup=True)
+                    child.add_widget(l)
+            pass
+            
+            
         
         
         

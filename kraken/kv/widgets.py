@@ -83,13 +83,7 @@ class DraggableWidget(RelativeLayout):
                 Color(1,1,1,1)
                 self.selected = Line(rectangle=(0,0,self.width,self.height), dash_offset=2,  width=2)
                 
-        if os.path.exists('/tmp/images/time.json'):
-                f = open('/tmp/images/time.json')
-                json_data = json.load(f)
-                if self.id in json_data['time']:
-                    self.parent.status_bar.process_time = json_data['time'][self.id]
-                else:
-                    self.parent.status_bar.process_time = 0
+        
 
     def on_touch_move(self, touch):
         (x,y) = self.parent.to_parent(touch.x, touch.y)

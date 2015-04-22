@@ -53,7 +53,7 @@ class ToolRectangle(ToolButton):
         #widget.pars = self.parent.tool_parameter.text
         widget.id = str(uuid.uuid1())
         
-        l = Label(text=widget.name)
+        l = Label(text='[b]' + widget.name + '[/b]',markup=True)
         widget.add_widget(l)
         
         if len(ds.children) == 0:
@@ -82,7 +82,7 @@ class ToolRectangle(ToolButton):
         widget.out_cv = out_cv
         widget.level = level
         
-        l = Label(text=widget.name)
+        l = Label(text='[b]' + widget.name + '[/b]',markup=True)
         widget.add_widget(l)
     
         ds.add_widget(widget)
@@ -159,6 +159,7 @@ class ToolSelectFunction(Spinner):
         self.bubb_layout = None
         self.button = None
         self.func_des = None
+        self.background_color = (0.46,0.46,0.46,0.6)
         super(ToolSelectFunction, self).__init__(**kwargs)
     
     def _on_dropdown_select(self, instance, data, *largs):
@@ -179,7 +180,7 @@ class ToolSelectFunction(Spinner):
                 self.bubble = None
                 self.bubb_layout= None
                 
-            self.button = BubbleButton(text=self.func_des, halign = 'left', valign='middle', text_size = (300,300), background_color = (0, 0.5, 0.5, 1),markup=True)
+            self.button = BubbleButton(text=self.func_des, halign = 'left', valign='middle', text_size = (300,300), background_color = (0, 0, 1, 1),markup=True)
             self.button.bind(on_press=remove_bubble)
             self.bubble.add_widget(self.button)
             self.bubble.arrow_pos = 'top_mid'
